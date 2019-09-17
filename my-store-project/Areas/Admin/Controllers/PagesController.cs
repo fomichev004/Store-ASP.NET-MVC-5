@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace my_store_project.Areas.Admin.Controllers
 {
-    public class DashboardController : Controller
+    public class PagesController : Controller
     {
-        // GET: Admin/Dashboard
+        // GET: Admin/Pages
         public ActionResult Index()
         {
             return View();
