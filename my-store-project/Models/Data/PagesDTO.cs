@@ -17,6 +17,6 @@ namespace my_store_project.Models.Data
         public string Body { get; set; }
         public int Sorting { get; set; }
         public bool HesSlideBar { get; set; }
-        public bool HasSlideBar { get; internal set; }
+      
     }
 }

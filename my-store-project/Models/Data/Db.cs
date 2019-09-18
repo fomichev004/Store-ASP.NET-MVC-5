@@ -9,5 +9,6 @@ namespace my_store_project.Models.Data
     public class Db : DbContext
 
     {
+        public DbSet<PagesDTO> Pages { get; set; }
     }
 }
