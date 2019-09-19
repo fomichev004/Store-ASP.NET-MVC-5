@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using my_store_project.Models.Data;
 
 namespace my_store_project.Areas.Admin.Controllers
 {
@@ -17,10 +18,13 @@ namespace my_store_project.Areas.Admin.Controllers
             List<PageVM> pageList;
 
            // Инициализируем список (DB)
-           using { Db db = new Db()}
+           using  (Db db = new Db())
+           {
+            pageList = db.Pages.ToArray().Orderby(x => x.Sorting).Select(x => new PageVM(x)).ToList();
+           }
 
             // Возвращаем представление 
-            return View();
+            return View(pageList);
         }
     }
 }
