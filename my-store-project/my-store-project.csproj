@@ -186,6 +186,7 @@
     <Content Include="obj\Debug\Tsc.out" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Pages\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -230,7 +231,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Pages\" />
     <Folder Include="Areas\Admin\Views\Page\" />
     <Folder Include="Controllers\" />
     <Folder Include="obj\Debug\TempPE\" />

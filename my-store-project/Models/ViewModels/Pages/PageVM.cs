@@ -21,7 +21,7 @@ namespace my_store_project.Models.ViewModels.Pages
             Slug = row.Slug;
             Body = row.Body;
             Sorting = row.Sorting;
-            HasSlideBar = row.HesSlideBar;
+            HasSlideBar = row.HasSlideBar;
         }
 
         public int Id { get; set; }
