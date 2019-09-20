@@ -26,5 +26,11 @@ namespace my_store_project.Areas.Admin.Controllers
             // Возвращаем представление 
             return View(pageList);
         }
+
+        // GET: Admin/Pages/AddPage
+        public ActionResult AddPage()
+        {
+            return View();
+        }
     }
 }
