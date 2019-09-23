@@ -39,18 +39,18 @@ namespace my_store_project.Areas.Admin.Controllers
          public ActionResult AddPage(PageVM model)
         {
             //Проверка модели на валидность
-            if (!ModelState.isValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            using (Db db = new Db());
+            using (Db db = new Db())
             {
                 //Объявляем переменную для краткого описания (slug)
                 string slug;
 
                 //Инициализируем класс PageDTO
-                PageDTO dto = new PagesDTO();
+                PagesDTO dto = new PagesDTO();
 
                 //Присваеваем заголовок модели
                 dto.Title = model.Title.ToUpper();
@@ -62,7 +62,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 }
                 else
                 {
-                    slug = model.Slug.Replac(" ", "-").ToLower();
+                    slug = model.Slug.Replace(" ", "-").ToLower();
                 }
                 //Убеждаемся, что заголовок и краткое описание - уникальны
                 if (db.Pages.Any(x=> x.Title == model.Title))
@@ -80,7 +80,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 //Присваиваем оставшиеся значения модели
                 dto.Slug = slug;
                 dto.Body = model.Body;
-                dto.HasSlidebar = model.HasSlidebar;
+                dto.HasSlideBar = model.HasSlideBar;
                 dto.Sorting = 100;
 
                 //Сохраняем модель в базу данных
@@ -90,7 +90,7 @@ namespace my_store_project.Areas.Admin.Controllers
             }
 
             //Передаем сообщение через TempData (sm?)
-            TempData["SM"] = "You have added a new page";
+            TempData["Successful message"] = "You have added a new page";
 
             //Переадресовываем пользователя на метод INDEX
             return RedirectToAction("Index");
