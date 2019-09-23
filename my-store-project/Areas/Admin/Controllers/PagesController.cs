@@ -44,24 +44,56 @@ namespace my_store_project.Areas.Admin.Controllers
                 return View(model);
             }
 
-            //Объявляем переменную для краткого описания (slug)
+            using (Db db = new Db());
+            {
+                //Объявляем переменную для краткого описания (slug)
+                string slug;
 
-            //Инициализируем класс PageDTO
+                //Инициализируем класс PageDTO
+                PageDTO dto = new PagesDTO();
 
-            //Присваеваем заголовок модели
+                //Присваеваем заголовок модели
+                dto.Title = model.Title.ToUpper();
 
-            //Проверяем, есть ли краткое описание, если нет, присваиваем его
+                //Проверяем, есть ли краткое описание, если нет, присваиваем его
+                if (string.IsNullOrWhiteSpace(model.Slug))
+                {
+                    slug = model.Title.Replace(" ", "-").ToLower();
+                }
+                else
+                {
+                    slug = model.Slug.Replac(" ", "-").ToLower();
+                }
+                //Убеждаемся, что заголовок и краткое описание - уникальны
+                if (db.Pages.Any(x=> x.Title == model.Title))
+                {
+                    ModelState.AddModelError("", "That title already exist");
+                    return View(model);
+                }
+                else if (db.Pages.Any(x=> x.Slug == model.Slug))
+                {
+                    ModelState.AddModelError("", "That slug already exist");
+                    return View(model);
+                }
 
-            //Убеждаемся, что заголовок и краткое описание - уникальны
 
-            //Присваиваем оставшиеся значения модели
+                //Присваиваем оставшиеся значения модели
+                dto.Slug = slug;
+                dto.Body = model.Body;
+                dto.HasSlidebar = model.HasSlidebar;
+                dto.Sorting = 100;
 
-            //Сохраняем модель в базу данных
+                //Сохраняем модель в базу данных
+                db.Pages.Add(dto);
+                db.SaveChanges();
 
-            //Передаем сообщение через TempData
+            }
+
+            //Передаем сообщение через TempData (sm?)
+            TempData["SM"] = "You have added a new page";
 
             //Переадресовываем пользователя на метод INDEX
-
+            return RedirectToAction("Index");
         }
 
     }
