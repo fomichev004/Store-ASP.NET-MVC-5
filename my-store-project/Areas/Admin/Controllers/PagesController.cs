@@ -184,7 +184,7 @@ namespace my_store_project.Areas.Admin.Controllers
             return RedirectToAction("EditPage");
         }
             //Get: Admin/Pages/PagesDetails/id
-           [HttpGet]
+            //[HttpGet]
             public ActionResult PageDetails()
             {
                 //Обявляем модель PageVm
