@@ -9,6 +9,8 @@ namespace my_store_project.Models.ViewModels.Pages
 {
     public class PageVM
     {
+        internal string slug;
+
         public PageVM()
         {
 

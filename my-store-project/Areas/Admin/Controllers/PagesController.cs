@@ -136,7 +136,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 int id = model.Id;
 
                 //Объявляем переменную краткого заголовка
-                string slug = home;
+                string slug = "home";
 
                 //Получаем страницу (по ID)
                 PagesDTO dto = db.Pages.Find(id);
@@ -153,19 +153,19 @@ namespace my_store_project.Areas.Admin.Controllers
                     }
                     else
                     {
-                        slug = model.slug.Replace(" ", "-".)ToLower();
+                        slug = model.Slug.Replace(" ", "-").ToLower();
                     }
                 }
 
                 //Проверяем краткий заголовок и заголовок на уникальность
                 if (db.Pages.Where(x => x.Id != id).Any(x => x.Title == model.Title))
                 {
-                    ModelState.AddModelError("", "That title is already exist")
+                    ModelState.AddModelError("", "That title is already exist");
                     return View (model);
                 }
-                else if (db.Pages.Where(x => x.Id != id).Any(x => x.Slug == slug)
+                else if (db.Pages.Where(x => x.Id != id).Any(x => x.Slug == slug))
                 {
-                    ModelState.AddModelError("", "That slug already exist.")
+                    ModelState.AddModelError("", "That slug already exist.");
                     return View(model);
                 }
 
@@ -178,17 +178,18 @@ namespace my_store_project.Areas.Admin.Controllers
             }
 
             //Устанавливаем сообщение в TempData
-            TempData["Successful message"] = "You have edited the page."
+            TempData["Successful message"] = "You have edited the page.";
 
             //Переадресация пользователя
             return RedirectToAction("EditPage");
         }
             //Get: Admin/Pages/PagesDetails/id
             //[HttpGet]
-            public ActionResult PageDetails()
+            public ActionResult PageDetails(int id)
             {
                 //Обявляем модель PageVm
-                PageVm model;
+                PageVM model;
+
                 using (Db db = new Db())
                 {
                     //Подтверждаем, что страница доступна
@@ -199,7 +200,7 @@ namespace my_store_project.Areas.Admin.Controllers
                     }
                        
                     //Присваеваем модели иннформацию из базы
-                    model = new PageVm(dto);
+                    model = new PageVM(dto);
 
                 }
                 //Возвращаем модель представления

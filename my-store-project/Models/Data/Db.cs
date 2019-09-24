@@ -11,4 +11,5 @@ namespace my_store_project.Models.Data
     {
         public DbSet<PagesDTO> Pages { get; set; }
     }
+    
 }
