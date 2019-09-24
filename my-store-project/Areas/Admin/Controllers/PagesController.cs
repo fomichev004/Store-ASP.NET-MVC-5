@@ -89,7 +89,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
             }
 
-            //Передаем сообщение через TempData (sm?)
+            //Передаем сообщение через TempData
             TempData["Successful message"] = "You have added a new page";
 
             //Переадресовываем пользователя на метод INDEX
