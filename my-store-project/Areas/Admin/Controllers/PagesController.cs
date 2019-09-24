@@ -28,7 +28,7 @@ namespace my_store_project.Areas.Admin.Controllers
         }
 
         // GET: Admin/Pages/AddPage
-         [HttpGet]
+        [HttpGet]
         public ActionResult AddPage()
         {
             return View();
@@ -95,6 +95,57 @@ namespace my_store_project.Areas.Admin.Controllers
             //Переадресовываем пользователя на метод INDEX
             return RedirectToAction("Index");
         }
+        //GET: Admin/Pages/EditPage/id
 
+        [HttpGet]
+        public ActionResult EditPage(int id)
+        {
+            //Объявляем модель PageVM
+            PageVM model;
+
+            using(Db db = new Db ())
+            {        
+                //Получаем страницу
+                PagesDTO dto = db.Pages.Find(id);
+
+                //Проверяем, доступна ли страница
+                if (dto == null)
+                {
+                    return Content("The page does not exist.");
+                }
+                //Eсли страница доступна, инициализириуем данные из DTO
+                model = new PageVM(dto);
+            }
+                //Возвращаем модель в представление
+
+                return View(model);
+        }
+
+        //POST: Admin/Pages/EditPage
+        [HttpPost]
+        public ActionResult EditPage(PageVM model)
+        {
+            //Проверить модель на валидность
+
+            //Объявляем переменную краткого заголовка
+
+            //Получаем страницу (по ID)
+
+            //Присваиваем название из полученной модели в DTO
+
+            //Проверка краткий заголовок (Slug) и присваиваем его, если это необходимо
+
+            //Проверяем краткий заголовок и заголовок на уникальность
+
+            //Записываем остальные значения в класс DTO
+
+            //Сохраняем изменения в базу
+
+            //Устанавливаем сообщение в TempData
+
+            //Переадресация пользователя
+
+            return View();
+        }
     }
 }
