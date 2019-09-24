@@ -5,6 +5,7 @@
 }
 
     <h2>Pages</h2>
+    
 @if (TempData["Successful message"] != null)
 {
     <div class="alert alert-success">
@@ -41,8 +42,11 @@
             @Html.DisplayFor(modelItem => item.HasSlideBar)
         </td>
         <td>
+            //Метод деталей
             @Html.ActionLink("Edit", "EditPage", new { id=item.Id }) |
+            //Метод редактирования
             @Html.ActionLink("Details", "PageDetails", new { id=item.Id }) |
+
             @Html.ActionLink("Delete", "DeletePage", new { id=item.Id })
         </td>
     </tr>
