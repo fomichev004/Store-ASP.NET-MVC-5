@@ -27,77 +27,77 @@ namespace my_store_project.Areas.Admin.Controllers
             return View(pageList);
         }
 
-        // GET: Admin/Pages/AddPage
-        [HttpGet]
-        public ActionResult AddPage()
-        {
-            return View();
-        }
-
-        // POST: Admin/Pages/AddPage
-        [HttpPost]
-         public ActionResult AddPage(PageVM model)
-        {
-            //Проверка модели на валидность
-            if (!ModelState.IsValid)
+            // GET: Admin/Pages/AddPage
+            [HttpGet]
+            public ActionResult AddPage()
             {
-                return View(model);
+                return View();
             }
 
-            using (Db db = new Db())
+            // POST: Admin/Pages/AddPage
+            [HttpPost]
+             public ActionResult AddPage(PageVM model)
             {
-                //Объявляем переменную для краткого описания (slug)
-                string slug;
-
-                //Инициализируем класс PageDTO
-                PagesDTO dto = new PagesDTO();
-
-                //Присваеваем заголовок модели
-                dto.Title = model.Title.ToUpper();
-
-                //Проверяем, есть ли краткое описание, если нет, присваиваем его
-                if (string.IsNullOrWhiteSpace(model.Slug))
+                //Проверка модели на валидность
+                if (!ModelState.IsValid)
                 {
-                    slug = model.Title.Replace(" ", "-").ToLower();
-                }
-                else
-                {
-                    slug = model.Slug.Replace(" ", "-").ToLower();
-                }
-                //Убеждаемся, что заголовок и краткое описание - уникальны
-                if (db.Pages.Any(x=> x.Title == model.Title))
-                {
-                    ModelState.AddModelError("", "That title already exist");
-                    return View(model);
-                }
-                else if (db.Pages.Any(x=> x.Slug == model.Slug))
-                {
-                    ModelState.AddModelError("", "That slug already exist");
                     return View(model);
                 }
 
+                using (Db db = new Db())
+                {
+                    //Объявляем переменную для краткого описания (slug)
+                    string slug;
 
-                //Присваиваем оставшиеся значения модели
-                dto.Slug = slug;
-                dto.Body = model.Body;
-                dto.HasSlideBar = model.HasSlideBar;
-                dto.Sorting = 100;
+                    //Инициализируем класс PageDTO
+                    PagesDTO dto = new PagesDTO();
 
-                //Сохраняем модель в базу данных
-                db.Pages.Add(dto);
-                db.SaveChanges();
+                    //Присваеваем заголовок модели
+                    dto.Title = model.Title.ToUpper();
 
+                    //Проверяем, есть ли краткое описание, если нет, присваиваем его
+                    if (string.IsNullOrWhiteSpace(model.Slug))
+                    {
+                        slug = model.Title.Replace(" ", "-").ToLower();
+                    }
+                    else
+                    {
+                        slug = model.Slug.Replace(" ", "-").ToLower();
+                    }
+                    //Убеждаемся, что заголовок и краткое описание - уникальны
+                    if (db.Pages.Any(x=> x.Title == model.Title))
+                    {
+                        ModelState.AddModelError("", "That title already exist");
+                        return View(model);
+                    }
+                    else if (db.Pages.Any(x=> x.Slug == model.Slug))
+                    {
+                        ModelState.AddModelError("", "That slug already exist");
+                        return View(model);
+                    }
+
+
+                    //Присваиваем оставшиеся значения модели
+                    dto.Slug = slug;
+                    dto.Body = model.Body;
+                    dto.HasSlideBar = model.HasSlideBar;
+                    dto.Sorting = 100;
+
+                    //Сохраняем модель в базу данных
+                    db.Pages.Add(dto);
+                    db.SaveChanges();
+
+                }
+
+                //Передаем сообщение через TempData
+                TempData["Successful message"] = "You have added a new page";
+
+                //Переадресовываем пользователя на метод INDEX
+                return RedirectToAction("Index");
             }
-
-            //Передаем сообщение через TempData
-            TempData["Successful message"] = "You have added a new page";
-
-            //Переадресовываем пользователя на метод INDEX
-            return RedirectToAction("Index");
-        }
-        //GET: Admin/Pages/EditPage/id
-        [HttpGet]
-        public ActionResult EditPage(int id)
+            //GET: Admin/Pages/EditPage/id
+            [HttpGet]
+            public ActionResult EditPage(int id)
         {
             //Объявляем модель PageVM
             PageVM model;
@@ -120,9 +120,9 @@ namespace my_store_project.Areas.Admin.Controllers
                 return View(model);
         }
 
-        //POST: Admin/Pages/EditPage
-        [HttpPost]
-        public ActionResult EditPage(PageVM model)
+            //POST: Admin/Pages/EditPage
+            [HttpPost]
+            public ActionResult EditPage(PageVM model)
         {
             //Проверить модель на валидность
             if (!ModelState.IsValid)
@@ -206,6 +206,26 @@ namespace my_store_project.Areas.Admin.Controllers
                 //Возвращаем модель представления
                 
                 return View(model);
+            }
+
+            //создаем метод удаления
+            //GET: Admin/Pages/DeletePage/id
+            public ActionResult DeletePage(int id)
+            {
+                using (Db db = new Db())
+                {
+                    //Получаем страницу
+                    PagesDTO dto = db.Pages.Find(id);
+
+                    //Удаляем страницу
+                    db.Pages.Remove(dto);
+
+                    //Сохраняем изменения в базе
+                    db.SaveChanges();
+                }
+
+                //Переадресовываем пользователя
+                return RedirectToAction("Index");
             }
     }
 }
