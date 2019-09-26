@@ -50,12 +50,18 @@ else
                     @Html.DisplayFor(modelItem => item.HasSlideBar)
                 </td>
                 <td>
-                    <!-- Метод деталей-->
+                    <!-- Метод деталей -->
                     @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
-                    <!-- Метод редактирования-->
-                    @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
-
-                    @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new {@class = "delete"})
+                    <!-- Метод редактирования -->
+                    @Html.ActionLink("Details", "PageDetails", new { id = item.Id })
+                    
+                    <!-- Если Slug равен home, не показывать кнопку удаления -->
+                    @if (item.Slug != "home")
+                    {
+                      string slash = "| ";
+                      @slash;
+                      @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new {@class = "delete"})  
+                    }                    
                 </td>
             </tr>
         }
