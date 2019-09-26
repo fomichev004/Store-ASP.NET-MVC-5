@@ -1,0 +1,28 @@
+using my_store_project.Models.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace my_store_project.Models.ViewModels.Pages
+{
+    public class SidebarVM
+    {
+        internal string slug;
+
+        public SidebarVM()
+        {
+
+        }
+
+        public SidebarVM(SidebarDTO row)
+        {
+            Id = row.Id;
+            Body = row.Body;
+        }
+
+        public int Id { get; set; }
+        public string Body { get; set; }
+    }
+}
