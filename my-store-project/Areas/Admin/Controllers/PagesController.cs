@@ -224,6 +224,9 @@ namespace my_store_project.Areas.Admin.Controllers
                     db.SaveChanges();
                 }
 
+                //Добавляем сообщение о удачном удалении страницы
+                TempData["Successful message"] = "You have deleted a page!";
+                
                 //Переадресовываем пользователя
                 return RedirectToAction("Index");
             }
