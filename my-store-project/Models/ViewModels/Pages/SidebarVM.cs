@@ -9,14 +9,12 @@ namespace my_store_project.Models.ViewModels.Pages
 {
     public class SidebarVM
     {
-        internal string slug;
-
         public SidebarVM()
         {
 
         }
 
-        public SidebarVM(SidebarDTO row)
+        public SidebarVM (SidebarDTO row)
         {
             Id = row.Id;
             Body = row.Body;
