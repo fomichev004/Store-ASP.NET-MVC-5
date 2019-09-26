@@ -231,7 +231,7 @@ namespace my_store_project.Areas.Admin.Controllers
         
         //GET: Admin/Pages/ReorderPages  
         [HttpPost]
-        public ActionResult ReorderPages(int [] id)
+        public void ReorderPages(int[] id)
         {
             using (Db db = new Db())
             {            
@@ -239,7 +239,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 int count = 1;
 
                 //Инициализируем модель данных
-                PageDTO dto;
+                PagesDTO dto;
 
                 //Устанавливаем сортировку для каждой страницы
                 foreach (var pageId in id)
@@ -252,8 +252,8 @@ namespace my_store_project.Areas.Admin.Controllers
             }
         }
 
-        
-        //GET: Admin/Pages/EditsSidebar  
+
+        //GET: Admin/Pages/EditSidebar  
         [HttpGet]
         public ActionResult EditSidebar()
         {
@@ -264,7 +264,7 @@ namespace my_store_project.Areas.Admin.Controllers
             {
                 //Получаем данные из DTO
                 SidebarDTO dto = db.Sidebars.Find(1); // Жесткое значение в коде не желательно добавлять, исправить. 
-
+                               
                 //Заполняем модель данными
                 model = new SidebarVM(dto);
             }
@@ -273,10 +273,10 @@ namespace my_store_project.Areas.Admin.Controllers
             return View(model);
         }
 
-        
-        //POST: Admin/Pages/EditsSidebar
+
+        //POST: Admin/Pages/EditSidebar
         [HttpPost]
-        public ActionResult EditSidebar(SidebarVm model)
+        public ActionResult EditSidebar(SidebarVM model)
         {
             using (Db db = new Db())
             {
