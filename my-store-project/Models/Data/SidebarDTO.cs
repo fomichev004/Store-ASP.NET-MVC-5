@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace my_store_project.Models.Data
 {
@@ -12,6 +12,6 @@ namespace my_store_project.Models.Data
     {
         [Key]
         public int Id { get; set; }
-        public string Body { get; set; }              
+        public string Body { get; set; }
     }
 }
