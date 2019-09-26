@@ -55,11 +55,10 @@ else
                     <!-- Метод редактирования-->
                     @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
 
-                    @Html.ActionLink("Delete", "DeletePage", new { id = item.Id })
+                    @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new {@class = "delete"})
                 </td>
             </tr>
         }
-
     </table>
 }
 
