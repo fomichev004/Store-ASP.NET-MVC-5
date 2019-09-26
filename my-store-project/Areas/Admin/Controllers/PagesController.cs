@@ -11,7 +11,7 @@ namespace my_store_project.Areas.Admin.Controllers
 {
     public class PagesController : Controller
     {
-        // GET: Admin/Pages
+        // GET: Admin/Pages 
         public ActionResult Index()
         {
             //Объявляем спсок для представления (PageVM)
@@ -27,77 +27,76 @@ namespace my_store_project.Areas.Admin.Controllers
             return View(pageList);
         }
 
-            // GET: Admin/Pages/AddPage
-            [HttpGet]
-            public ActionResult AddPage()
+        // GET: Admin/Pages/AddPage 
+        [HttpGet]
+        public ActionResult AddPage()
+        {
+            return View();
+        }
+
+        // POST: Admin/Pages/AddPage 
+        [HttpPost]
+        public ActionResult AddPage(PageVM model)
+        {
+            //Проверка модели на валидность
+            if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
-            // POST: Admin/Pages/AddPage
-            [HttpPost]
-             public ActionResult AddPage(PageVM model)
+            using (Db db = new Db())
             {
-                //Проверка модели на валидность
-                if (!ModelState.IsValid)
+                //Объявляем переменную для краткого описания (slug)
+                string slug;
+
+                //Инициализируем класс PageDTO
+                PagesDTO dto = new PagesDTO();
+
+                //Присваеваем заголовок модели
+                dto.Title = model.Title.ToUpper();
+
+                //Проверяем, есть ли краткое описание, если нет, присваиваем его
+                if (string.IsNullOrWhiteSpace(model.Slug))
                 {
+                    slug = model.Title.Replace(" ", "-").ToLower();
+                }
+                else
+                {
+                    slug = model.Slug.Replace(" ", "-").ToLower();
+                }
+                //Убеждаемся, что заголовок и краткое описание - уникальны
+                if (db.Pages.Any(x=> x.Title == model.Title))
+                {
+                    ModelState.AddModelError("", "That title already exist");
+                    return View(model);
+                }
+                else if (db.Pages.Any(x=> x.Slug == model.Slug))
+                {
+                    ModelState.AddModelError("", "That slug already exist");
                     return View(model);
                 }
 
-                using (Db db = new Db())
-                {
-                    //Объявляем переменную для краткого описания (slug)
-                    string slug;
+                //Присваиваем оставшиеся значения модели
+                dto.Slug = slug;
+                dto.Body = model.Body;
+                dto.HasSlideBar = model.HasSlideBar;
+                dto.Sorting = 100;
 
-                    //Инициализируем класс PageDTO
-                    PagesDTO dto = new PagesDTO();
-
-                    //Присваеваем заголовок модели
-                    dto.Title = model.Title.ToUpper();
-
-                    //Проверяем, есть ли краткое описание, если нет, присваиваем его
-                    if (string.IsNullOrWhiteSpace(model.Slug))
-                    {
-                        slug = model.Title.Replace(" ", "-").ToLower();
-                    }
-                    else
-                    {
-                        slug = model.Slug.Replace(" ", "-").ToLower();
-                    }
-                    //Убеждаемся, что заголовок и краткое описание - уникальны
-                    if (db.Pages.Any(x=> x.Title == model.Title))
-                    {
-                        ModelState.AddModelError("", "That title already exist");
-                        return View(model);
-                    }
-                    else if (db.Pages.Any(x=> x.Slug == model.Slug))
-                    {
-                        ModelState.AddModelError("", "That slug already exist");
-                        return View(model);
-                    }
-
-
-                    //Присваиваем оставшиеся значения модели
-                    dto.Slug = slug;
-                    dto.Body = model.Body;
-                    dto.HasSlideBar = model.HasSlideBar;
-                    dto.Sorting = 100;
-
-                    //Сохраняем модель в базу данных
-                    db.Pages.Add(dto);
-                    db.SaveChanges();
-
-                }
-
-                //Передаем сообщение через TempData
-                TempData["Successful message"] = "You have added a new page";
-
-                //Переадресовываем пользователя на метод INDEX
-                return RedirectToAction("Index");
+                //Сохраняем модель в базу данных
+                db.Pages.Add(dto);
+                db.SaveChanges();
             }
-            //GET: Admin/Pages/EditPage/id
-            [HttpGet]
-            public ActionResult EditPage(int id)
+
+            //Передаем сообщение через TempData
+            TempData["Successful message"] = "You have added a new page";
+
+            //Переадресовываем пользователя на метод INDEX
+            return RedirectToAction("Index");
+        }
+
+        //GET: Admin/Pages/EditPage/id 
+        [HttpGet]
+        public ActionResult EditPage(int id)
         {
             //Объявляем модель PageVM
             PageVM model;
@@ -115,14 +114,14 @@ namespace my_store_project.Areas.Admin.Controllers
                 //Eсли страница доступна, инициализириуем данные из DTO
                 model = new PageVM(dto);
             }
-                //Возвращаем модель в представление
 
-                return View(model);
+            //Возвращаем модель в представление
+            return View(model);
         }
 
-            //POST: Admin/Pages/EditPage
-            [HttpPost]
-            public ActionResult EditPage(PageVM model)
+        //POST: Admin/Pages/EditPage 
+        [HttpPost]
+        public ActionResult EditPage(PageVM model)
         {
             //Проверить модель на валидность
             if (!ModelState.IsValid)
@@ -173,6 +172,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 dto.Slug = slug;
                 dto.Body = model.Body;
                 dto.HasSlideBar = model.HasSlideBar;
+
                 //Сохраняем изменения в базу
                 db.SaveChanges();
             }
@@ -183,81 +183,118 @@ namespace my_store_project.Areas.Admin.Controllers
             //Переадресация пользователя
             return RedirectToAction("EditPage");
         }
-            //Get: Admin/Pages/PagesDetails/id
-            //[HttpGet]
-            public ActionResult PageDetails(int id)
+
+        //Get: Admin/Pages/PagesDetails/id  
+        public ActionResult PageDetails(int id)
+        {
+            //Обявляем модель PageVm
+            PageVM model;
+
+            using (Db db = new Db())
             {
-                //Обявляем модель PageVm
-                PageVM model;
-
-                using (Db db = new Db())
+                //Подтверждаем, что страница доступна
+                PagesDTO dto = db.Pages.Find(id);
+                if (dto == null)
                 {
-                    //Подтверждаем, что страница доступна
-                    PagesDTO dto = db.Pages.Find(id);
-                    if (dto == null)
-                    {
-                        return Content("The page does not exist.");
-                    }
-                       
-                    //Присваеваем модели иннформацию из базы
-                    model = new PageVM(dto);
-
+                    return Content("The page does not exist.");
                 }
-                //Возвращаем модель представления
-                
-                return View(model);
+                   
+                //Присваеваем модели иннформацию из базы
+                model = new PageVM(dto);
             }
 
-            //создаем метод удаления
-            //GET: Admin/Pages/DeletePage/id
-            public ActionResult DeletePage(int id)
+            //Возвращаем модель представления            
+            return View(model);
+        }
+
+        //создаем метод удаления
+        //GET: Admin/Pages/DeletePage/id  
+        public ActionResult DeletePage(int id)
+        {
+            using (Db db = new Db())
             {
-                using (Db db = new Db())
+                //Получаем страницу
+                PagesDTO dto = db.Pages.Find(id);
+                //Удаляем страницу
+                db.Pages.Remove(dto);
+                //Сохраняем изменения в базе
+                db.SaveChanges();
+            }
+
+            //Добавляем сообщение о удачном удалении страницы
+            TempData["Successful message"] = "You have deleted a page!";
+            
+            //Переадресовываем пользователя
+            return RedirectToAction("Index");
+        }
+
+        
+        //GET: Admin/Pages/ReorderPages  
+        [HttpPost]
+        public ActionResult ReorderPages(int [] id)
+        {
+            using (Db db = new Db())
+            {            
+                //Реализуем начальный счетчик
+                int count = 1;
+
+                //Инициализируем модель данных
+                PageDTO dto;
+
+                //Устанавливаем сортировку для каждой страницы
+                foreach (var pageId in id)
                 {
-                    //Получаем страницу
-                    PagesDTO dto = db.Pages.Find(id);
-
-                    //Удаляем страницу
-                    db.Pages.Remove(dto);
-
-                    //Сохраняем изменения в базе
+                    dto = db.Pages.Find(pageId);
+                    dto.Sorting = count;
                     db.SaveChanges();
+                    count++;
                 }
-
-                //Добавляем сообщение о удачном удалении страницы
-                TempData["Successful message"] = "You have deleted a page!";
-                
-                //Переадресовываем пользователя
-                return RedirectToAction("Index");
             }
+        }
 
-            //создаем метод удаления
-            //POST: Admin/Pages/ReorderPages
-            [HttpPost]
-            public ActionResult ReorderPages(int [] id)
+        
+        //GET: Admin/Pages/EditsSidebar  
+        [HttpGet]
+        public ActionResult EditSidebar()
+        {
+            //Объявляем модель
+            SidebarVM model;
+
+            using (Db db = new Db())
             {
-                using (Db db = new Db())
-                {
-                
-                    //Реализуем начальный счетчик
-                    int count = 1;
+                //Получаем данные из DTO
+                SidebarDTO dto = db.Sidebars.Find(1); // Жесткое значение в коде не желательно добавлять, исправить. 
 
-                    //Инициализируем модель данных
-                    PageDTO dto;
-
-                    //Устанавливаем сортировку для каждой страницы
-                    foreach (var pageId in id)
-                    {
-                        dto = db.Pages.Find(pageId);
-                        dto.Sorting = count;
-
-                        db.SaveChanges();
-
-                        count++;
-                    }
-
-
-                }
+                //Заполняем модель данными
+                model = new SidebarVM(dto);
             }
+
+            //Вернуть представление с моделью
+            return View(model);
+        }
+
+        
+        //POST: Admin/Pages/EditsSidebar
+        [HttpPost]
+        public ActionResult EditSidebar(SidebarVm model)
+        {
+            using (Db db = new Db())
+            {
+                //Получить данные из бд
+                SidebarDTO dto = db.Sidebars.Find(1); // Жесткое значение в коде не желательно добавлять, исправить. 
+            
+            
+                //Присвоить данные в тело (в свойство Body)
+                dto.Body = model.Body;
+
+                //Сохраняем
+                db.SaveChanges();
+            }
+            //Присваиваем сообщение в TempData
+            TempData["Successful message"] = "You have edited the sidebar!";
+
+            //Переадресовываем пользователя
+            return RedirectToAction("EditSidebar");
+        }
     }
 }
