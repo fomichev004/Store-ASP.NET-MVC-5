@@ -14,9 +14,9 @@ namespace my_store_project
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            //Подключаем новую библиатеку JQuery-UI
+            //Подключаем новую библиатеку JQuery-UI (5)
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.jquery-ui.js"));
+                        "~/Scripts/jquery-ui.js"));
 
             // Используйте версию Modernizr для разработчиков, чтобы учиться работать. Когда вы будете готовы перейти к работе,
             // готово к выпуску, используйте средство сборки по адресу https://modernizr.com, чтобы выбрать только необходимые тесты.
