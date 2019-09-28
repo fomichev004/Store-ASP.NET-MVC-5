@@ -9,8 +9,7 @@ namespace my_store_project.Models.ViewModels.Pages
 {
     public class PageVM
     {
-        internal string slug;
-
+       
         public PageVM()
         {
 
@@ -23,7 +22,7 @@ namespace my_store_project.Models.ViewModels.Pages
             Slug = row.Slug;
             Body = row.Body;
             Sorting = row.Sorting;
-            HasSlideBar = row.HasSlideBar;
+            HasSideBar = row.HasSideBar;
         }
 
         public int Id { get; set; }
@@ -36,6 +35,6 @@ namespace my_store_project.Models.ViewModels.Pages
         public string Body { get; set; }
         public int Sorting { get; set; }
         [Display(Name="Sidebar")]
-        public bool HasSlideBar { get; set; }
+        public bool HasSideBar { get; set; }
     }
 }
