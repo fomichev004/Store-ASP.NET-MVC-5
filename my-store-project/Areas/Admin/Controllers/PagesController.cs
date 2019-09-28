@@ -79,7 +79,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 //Присваиваем оставшиеся значения модели
                 dto.Slug = slug;
                 dto.Body = model.Body;
-                dto.HasSlideBar = model.HasSlideBar;
+                dto.HasSideBar = model.HasSideBar;
                 dto.Sorting = 100;
 
                 //Сохраняем модель в базу данных
@@ -144,9 +144,9 @@ namespace my_store_project.Areas.Admin.Controllers
                 dto.Title = model.Title;
 
                 //Проверка краткий заголовок (Slug) и присваиваем его, если это необходимо
-                if (model.slug != "home")
+                if (model.Slug != "home")
                 {
-                    if (string.IsNullOrWhiteSpace(model.slug))
+                    if (string.IsNullOrWhiteSpace(model.Slug))
                     {
                         slug = model.Title.Replace(" ", "-").ToLower();
                     }
@@ -171,7 +171,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 //Записываем остальные значения в класс DTO
                 dto.Slug = slug;
                 dto.Body = model.Body;
-                dto.HasSlideBar = model.HasSlideBar;
+                dto.HasSideBar = model.HasSideBar;
 
                 //Сохраняем изменения в базу
                 db.SaveChanges();
