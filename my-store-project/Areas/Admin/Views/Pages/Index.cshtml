@@ -23,8 +23,8 @@
 else
 {
     <table class="table sorting" id="pages">
-        <tr>
-            <th class ="home">
+        <tr class ="home">
+            <th>
                 Title
             </th>
             <th>
@@ -85,7 +85,7 @@ else
             /*------------------------------------------------------*/
             /* Sorting script */
             $("table#pages tbody").sortable({ 
-                items: "tr:not(.home)",
+                items: "tr:not(.home)", 
                 placeholder: "ui-state-highlight",
                 update: function () {
                     var ids = $("table#pages tbody").sortable("serialize");
