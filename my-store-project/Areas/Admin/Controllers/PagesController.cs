@@ -231,7 +231,7 @@ namespace my_store_project.Areas.Admin.Controllers
         
         //GET: Admin/Pages/ReorderPages  
         [HttpPost]
-        public void ReorderPages(int[] id)
+        public void ReorderPages(int [] id)
         {
             using (Db db = new Db())
             {            
