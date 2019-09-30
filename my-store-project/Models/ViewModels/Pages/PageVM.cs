@@ -32,7 +32,6 @@ namespace my_store_project.Models.ViewModels.Pages
         public string Slug { get; set; }
         [Required]
         [StringLength(int.MaxValue, MinimumLength = 3)]
-        [Allowhtml]
         public string Body { get; set; }
         public int Sorting { get; set; }
         [Display(Name="Sidebar")]

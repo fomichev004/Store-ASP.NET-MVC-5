@@ -11,7 +11,7 @@ namespace my_store_project.Models.Data
     public class SidebarDTO
     {
         [Key]
-        public int Id { get; set; }        
+        public int Id { get; set; }
         public string Body { get; set; }
     }
 }
