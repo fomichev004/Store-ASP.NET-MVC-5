@@ -21,6 +21,7 @@ namespace my_store_project.Models.ViewModels.Pages
         }
 
         public int Id { get; set; }
+        [Allowhtml]
         public string Body { get; set; }
     }
 }
