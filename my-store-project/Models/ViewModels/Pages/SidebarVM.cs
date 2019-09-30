@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace my_store_project.Models.ViewModels.Pages
 {
@@ -21,6 +22,7 @@ namespace my_store_project.Models.ViewModels.Pages
         }
 
         public int Id { get; set; }
+        [AllowHtml]
         public string Body { get; set; }
     }
 }
