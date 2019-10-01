@@ -24,5 +24,36 @@ namespace my_store_project.Areas.Admin.Controllers
         	//Возвращаем List в представление
             return View(categoryVMList);
         }
+
+        //POST:Admin/Shop/AddNewCategory
+        [HttpPost]
+        public string AddNewCategory(string catName)
+        {
+        	// Объявляем строковою переменную ID
+        	string id;
+        	using (Db db = new Db())
+        	{
+        		//Проверяем имя категории на уникальность
+        		if (db.Categories.Any)(x=> x.Name ==catName))
+					return "tittletaken"; 		
+
+	        	//Инициализируем модель DTO
+	        	CategoryDTO dto = new CategoryDTO();
+
+	        	//Добавляем данные в модель
+	        	dto.Name = catName;
+	        	dto.Slug = catName.Replace(" ", "-").ToLower();
+	        	dto.Sorting = 100;
+
+	        	//Сохранить
+	        	db.Categories.Add(dto);
+	            db.SaveChanges();
+
+	        	//Получаем ID для возврата в представлениие
+	        	id = dto.Id.ToString();
+        	}
+        	//Возвращаем ID в представление
+        	return id;
+        }
     }
 }
