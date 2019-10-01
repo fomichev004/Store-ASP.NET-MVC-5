@@ -1,4 +1,6 @@
-﻿using System;
+﻿using my_store_project.Models.Data;
+using my_store_project.Models.ViewModels.Shop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +18,7 @@ namespace my_store_project.Areas.Admin.Controllers
         	using (Db db = new Db())
         	{        	
         		//Инициализируем модель данными
-        		categoryVMList = db.Categories.ToArray().Orderby( x=> x.Sorting).Select( x=> new CategoryVM(x)).ToList();
+        		categoryVMList = db.Categories.ToArray().OrderBy( x=> x.Sorting).Select( x=> new CategoryVM(x)).ToList();
         	}
 
         	//Возвращаем List в представление
