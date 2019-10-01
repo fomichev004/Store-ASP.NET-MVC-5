@@ -27,18 +27,17 @@
     }    
     else
     {
-        <table class="table">
+        <table class="table" >
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
 
-                <th></th>
             </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
+                <tr id="id_@item.Id">
                     <td>
                         @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </td>
@@ -122,12 +121,7 @@
                         }
                     }
                 });
-            });
-           
-             
-
-
-            
+            });            
 
         
             /* 
@@ -136,8 +130,7 @@
 
             $("a.delete").click(function () {
                 if (!confirm("Confirm category deletion")) return false;
-            });
-            
+            });           
 
             /* 
             Sorting script
@@ -147,7 +140,7 @@
                 placeholder: "ui-state-highlight",
                 update: function () {
                     var ids = $("table#pages tbody").sortable("serialize");
-                    var url = "/Admin/Pages/ReorderPages";
+                    var url = "/Admin/Shop/ReorderCategories";
 
                     $.post(url, ids, function (data){
                     });
