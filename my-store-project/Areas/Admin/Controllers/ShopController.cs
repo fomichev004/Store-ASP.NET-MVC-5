@@ -35,7 +35,7 @@ namespace my_store_project.Areas.Admin.Controllers
         	{
         		//Проверяем имя категории на уникальность
         		if (db.Categories.Any(x => x.Name == catName))
-                    return "tittletaken"; 		
+                    return "titletaken"; 		
 
 	        	//Инициализируем модель DTO
 	        	CategoryDTO dto = new CategoryDTO();
