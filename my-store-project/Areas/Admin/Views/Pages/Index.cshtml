@@ -23,7 +23,7 @@
 else
 {
     <table class="table sorting" id="pages">
-        <tr class ="home">
+        <tr class="home">
             <th>
                 Title
             </th>
@@ -39,9 +39,9 @@ else
         @foreach (var item in Model)
         //  (5)
         {
-            <tr id = "id_@item.Id" class = "@item.Slug">
+            <tr id="id_@item.Id" class="@item.Slug">
                 <td>
-                    @if (item.Slug !="home")
+                    @if (item.Slug != "home")
                     {
                         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
                     }
@@ -58,43 +58,21 @@ else
                     @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
                     <!-- Метод редактирования -->
                     @Html.ActionLink("Details", "PageDetails", new { id = item.Id })
-                    
+
                     <!-- Если Slug равен home, не показывать кнопку удаления -->
                     @if (item.Slug != "home")
                     {
-                      string slash = "| ";
-                      @slash;
-                      @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new {@class = "delete"})  
-                    }                    
+                        string slash = "| ";
+                        @slash;
+                        @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "delete" })
+                    }
                 </td>
             </tr>
         }
     </table>
 }
 
-@section Scripts 
+@section Scripts
 {
-    <script>
-        $(function () {
-            /* Confirm page deletion*/
-
-            $("a.delete").click(function () {
-                if (!confirm("Confirm page deletion")) return false;
-            });
-
-            /*------------------------------------------------------*/
-            /* Sorting script */
-            $("table#pages tbody").sortable({ 
-                items: "tr:not(.home)", 
-                placeholder: "ui-state-highlight",
-                update: function () {
-                    var ids = $("table#pages tbody").sortable("serialize");
-                    var url = "/Admin/Pages/ReorderPages";
-
-                    $.post(url, ids, function (data){
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="~/Content/ShopJS/PageIndexVewJS.js"></script>
 }
