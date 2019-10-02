@@ -6,69 +6,76 @@
 
 <h2>Categories</h2>
 
+@if (TempData["Successful message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Successful message"]
+    </div>
+}
+
 <div class="new-cat">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">Category Name</span>
         </div>
-        <input type="text" id="newcatname" class="form-control"/>
+        <input type="text" id="newcatname" class="form-control" />
     </div>
     <p>
         <a href="#" id="newcata" class="btn btn-success">Add a new category</a>
         <span class="ajax-text">
-        <img src="~/Content/img/ajax-loader.gif" height="50" />            
+            <img src="~/Content/img/ajax-loader.gif" height="50" />
         </span>
     </p>
 </div>
 
-    @if (!Model.Any())
-    {
-        <h1 class="text-center">There are no category</h1>
-    }    
-    else
-    {
-        <table class="table sorting" id="pages" >
-            <tr class="home">
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                
-                <th></th>
-            </tr>
+@if (!Model.Any())
+{
+    <h1 class="text-center">There are no category</h1>
+}
+else
+{
+    <table class="table sorting" id="pages">
+        <tr class="home">
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
 
-            @foreach (var item in Model)
-            {
-                <tr id="id_@item.Id">
-                    <td>
-                        <div class = "container">
-                            <div class = "row">
-                                <div class="col-0">
-                                    <div class="ui-icon ui-icon-arrowthick-2-n-s" id="arrow-categories"></div>
-                                </div>
+            <th></th>
+        </tr>
 
-                                <div class="col">
-                                    @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                </div>
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.Id">
+                <td>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-0">
+                                <div class="ui-icon ui-icon-arrowthick-2-n-s" id="arrow-categories"></div>
+                            </div>
+
+                            <div class="col">
+                                @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <td>
-                        @Html.ActionLink("Delete", "DeleteCategory", new { id = item.Id }, new { @class = "delete btn btn-danger" })
-                    </td>
-                </tr>
-            }
+                <td>
+                    @Html.ActionLink("Delete", "DeleteCategory", new { id = item.Id }, new { @class = "delete btn btn-danger" })
+                </td>
+            </tr>
+        }
 
-        </table>
-    }
+    </table>
+}
 
-@section Scripts 
+@section Scripts
 {
     <script>
-         $(function () {
+        $(function () {
             /*Add new category*/
             /* Объявляем и инициализируем нужные переменные */
-            
+
             var newCatA = $("a#newcata"); /*Класс линка добавления*/
             var newCatTextInput = $("#newcatname"); /*Класс текстового поля ввода*/
             var ajaxText = $("span.ajax-text"); /*Класс картинки загрузки*/
@@ -131,28 +138,28 @@
                         }
                     }
                 });
-            });            
+            });
 
-        
-            /* 
-            Confirm page deletion
+
+            /*
+            Confirm category deletion
             */
 
-            $("a.delete").click(function () {
+            $("body").on("click", "a.delete", function () {
                 if (!confirm("Confirm category deletion")) return false;
-            });           
+            });
 
-            /* 
+            /*
             Sorting script
             */
-            $("table#pages tbody").sortable({ 
-                items: "tr:not(.home)", 
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
                 placeholder: "ui-state-highlight",
                 update: function () {
                     var ids = $("table#pages tbody").sortable("serialize");
                     var url = "/Admin/Shop/ReorderCategories";
 
-                    $.post(url, ids, function (data){
+                    $.post(url, ids, function (data) {
                     });
                 }
             });
