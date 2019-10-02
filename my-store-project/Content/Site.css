@@ -33,3 +33,7 @@ table.sorting tr:not(.home){
 .ajax-text {
 	display: none;
 }
+
+#arrow-categories{
+    margin-top: 10px;
+}
