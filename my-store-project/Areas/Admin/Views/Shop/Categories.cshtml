@@ -40,7 +40,17 @@
             {
                 <tr id="id_@item.Id">
                     <td>
-                        @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        <div class = "container">
+                            <div class = "row">
+                                <div class="col-0">
+                                    <div class="ui-icon ui-icon-arrowthick-2-n-s" id="arrow-categories"></div>
+                                </div>
+
+                                <div class="col">
+                                    @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                        </div>
                     </td>
 
                     <td>
