@@ -126,5 +126,21 @@ namespace my_store_project.Areas.Admin.Controllers
             //Возвращаем слово
             return "ok";
         }
+
+        //Создаметод добавления товаров
+        //GET: Admin/Shop/AddProduct
+        public ActionResult AddProduct()
+        {
+            //Объявляем модел
+            ProductVM model = new ProductVM();
+
+            //Добавляем список категорий из базы в модель
+            using (Db db = new Db())
+            {
+                model.Categories = new SelectList(db.Categories.ToList(), "id", "Name");
+            }
+            //Возвращаем модель в представление
+            return View(model);
+        }
     }
 }
