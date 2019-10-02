@@ -78,5 +78,27 @@ namespace my_store_project.Areas.Admin.Controllers
                 }
             }
         }
+
+        //GT: Admin/Shop/DeleteCategory/id  
+        public ActionResult DeleteCategory(int id)
+        {
+            using (Db db = new Db())
+            {
+                //Получаем модель категории
+                CategoryDTO dto = db.Categories.Find(id);
+
+                //Удаляем категорию
+                db.Categories.Remove(dto);
+
+                //Сохраняем изменения в базе
+                db.SaveChanges();
+            }
+
+            //Добавляем сообщение о удачном удалении категории
+            TempData["Successful message"] = "You have deleted a category!";
+
+            //Переадресовываем пользователя
+            return RedirectToAction("Categories");
+        }
     }
 }
