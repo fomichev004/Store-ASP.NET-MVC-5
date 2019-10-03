@@ -150,6 +150,7 @@ namespace my_store_project.Areas.Admin.Controllers
         //POST: Admin/Shop/AddProduct
         [HttpPost]
         public ActionResult AddProduct(ProductVM model, HttpPostedFileBase file) {
+
             //Проверка модели на валидность
             if (!ModelState.IsValid)
             {
@@ -168,13 +169,12 @@ namespace my_store_project.Areas.Admin.Controllers
                         model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
                         ModelState.AddModelError("", "That product name is taken!");
                         return View(model);
-
-
                 }
             }
 
             // Объявляем переменную ProductId
             int id;
+
             //Инициализируем и сохраняем модель на основе ProductDTO
             using (Db db = new Db())
             {
@@ -186,141 +186,97 @@ namespace my_store_project.Areas.Admin.Controllers
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
 
-                CategoryDTO catDTO = db.FirstOrDefault( x => x.Id == model.CategoryId);
-                product,CategoryName = catDTO.Name;
+                CategoryDTO catDTO = db.Categories.FirstOrDefault( x => x.Id == model.CategoryId);
+                product.CategoryName = catDTO.Name;
 
-                db.Product.Add(product);
+                db.Products.Add(product);
                 db.SaveChanges();
 
                 id = product.Id;
             }
-                //Добавляем сообщение в TempData
-            	TempData["Successful message"] = "You have added a product!";
 
-                #region Upload Image
+           //Добавляем сообщение в TempData
+           	TempData["Successful message"] = "You have added a product!";
 
-                //Создаем необходимые ссылки на дериктории
-                var originalDirectory = new DirectoryInfo (string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
+            #region Upload Image
 
-                var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
-                var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
-                var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\ + id.ToString() + \\Thumbs");
-                var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\ + id.ToString() + \\Gallery");
-                var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\ + id.ToString() + \\Gallery\\Thumbs");
+           //Создаем необходимые ссылки на дериктории
+             var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
 
-                //Проверяем наличие директорий (если нет, создаём)
-                if (!Directory.Exists(pathString1))
-               		Directory.CreateDirectory(pathString1);
+             var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
+             var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+             var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+             var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+             var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
 
-               	if (!Directory.Exists(pathString2))
-               		Directory.CreateDirectory(pathString2);
+           //Проверяем наличие директорий (если нет, создаём)
+             if (!Directory.Exists(pathString1))
+            	Directory.CreateDirectory(pathString1);
 
-               	if (!Directory.Exists(pathString3))
-               		Directory.CreateDirectory(pathString3);
+            if (!Directory.Exists(pathString2))
+                Directory.CreateDirectory(pathString2);
 
-               	if (!Directory.Exists(pathString4))
-               		Directory.CreateDirectory(pathString4);
+            if (!Directory.Exists(pathString3))
+                Directory.CreateDirectory(pathString3);
 
-               	if (!Directory.Exists(pathString5))
-               		Directory.CreateDirectory(pathString5);
+            if (!Directory.Exists(pathString4))
+                Directory.CreateDirectory(pathString4);
 
-                //Проверяем, был ли файл загружн
-               	if (file != Null && file.ContentLenght > 0)
+            if (!Directory.Exists(pathString5))
+                Directory.CreateDirectory(pathString5);
+
+            //Проверяем, был ли файл загружн
+            if (file != null && file.ContentLength > 0)
                	{
-               		//Получаем расширение файла
-               		string ext = file.ContentType.ToLower();
+               	//Получаем расширение файла
+               	string ext = file.ContentType.ToLower();
 
-               		//Проверяем расширение файла
-               		if (ext != "image/jpg" && 
-               			ext != "image/jepg" &&
-               			ext != "image/pjepg" &&
-               			ext != "image/gif" &&
-               			ext != "image/png" &&
-               			ext != "image/x-png")
+                //Проверяем расширение файла
+                if (ext != "image/jpg" &&
+                    ext != "image/jpeg" &&
+                    ext != "image/pjepg" &&
+                    ext != "image/gif" &&
+                    ext != "image/png" &&
+                    ext != "image/x-png")
+               	{
+               		using (Db db = new Db())
                		{
-               			using (Db db = new Db())
-               			{
-               				model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name")
-               				ModelState.AddModelError("", "The image was not uploaded - wrong image extentsion!")
-               				return View(model);
-               			}
+                        model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                        ModelState.AddModelError("", "The image was not uploaded - wrong image extentsion!");
+                        return View(model);
                		}
-               	
-                
-	                //Объявляем переменную с именем изображения
-	                string imageName = file.FileName;
+               	}
 
-	                //Сохраняем имя изображения в модель DTO
-	                using (Db db = new Db())
-	                {
-	                	ProductDTO dto = db.Products.Find(id);
-	                	dto.ImageName = imageName;
 
-	                	db.SaveChanges();
-	                }
+                //Объявляем переменную с именем изображения
+                string imageName = file.FileName;
 
-	                //Назначаем пути к оригинальному и уменьшенному изображению
-	                var path = string.Format($"{pathString2}\\{imageName}"); //путь к оригинальному изображению
-	                var path2 = string.Format($"{pathString3}\\{imageName}"); //путь к уменьшенному изображению
+                //Сохраняем имя изображения в модель DTO
+                using (Db db = new Db())
+	            {
+                    ProductDTO dto = db.Products.Find(id);
+                    dto.ImageName = imageName;
 
-	                //Сохраняем оригинальное изображение
-	                file.SaveAs(path);
+                    db.SaveChanges();
+                }
 
-	                //Создаем и сохраняем уменьшенную копию
-	                WebImage img = new WebImage(file.InputStream);
-	                img.Resize(200, 200);
-	                img.Save(path2);
-       			 }
+                //Назначаем пути к оригинальному и уменьшенному изображению
+                var path = string.Format($"{pathString2}\\{imageName}"); //путь к оригинальному изображению
+                var path2 = string.Format($"{pathString3}\\{imageName}"); //путь к уменьшенному изображению
 
-                #endregion
-                // переадресовываем пользователя
-                return RedirectToAction("AddProduct");          
+                //Сохраняем оригинальное изображение
+                file.SaveAs(path);
+
+                //Создаем и сохраняем уменьшенную копию
+                WebImage img = new WebImage(file.InputStream);
+                img.Resize(200, 200);
+                img.Save(path2);
+            }
+
+            #endregion
+
+            // переадресовываем пользователя
+            return RedirectToAction("AddProduct");          
         }
-
-
-
-
-        //                //Присваеваем заголовок модели
-        //                dto.Title = model.Title.ToUpper();
-
-        //                //Проверяем, есть ли краткое описание, если нет, присваиваем его
-        //                if (string.IsNullOrWhiteSpace(model.Slug))
-        //                {
-        //                    ProductId = model.Title.Replace(" ", "-").ToLower();
-        //                }
-        //                else
-        //                {
-        //                    ProductId = model.ProductId.Replace(" ", "-").ToLower();
-        //                }
-        //                //Убеждаемся, что заголовок и краткое описание - уникальны
-        //                if (db.Pages.Any(x=> x.Title == model.Title))
-        //                {
-        //                    ModelState.AddModelError("", "That title already exist");
-        //                    return View(model);
-        //                }
-        //                else if (db.Pages.Any(x=> x.Slug == model.Slug))
-        //                {
-        //                    ModelState.AddModelError("", "That slug already exist");
-        //                    return View(model);
-        //                }
-
-        //                //Присваиваем оставшиеся значения модели
-        //                dto.ProductId = ProductId;
-        //                dto.Body = model.Body;
-        //                dto.HasSideBar = model.HasSideBar;
-        //                dto.Sorting = 100;
-
-        //                //Сохраняем модель в базу данных
-        //                db.Pages.Add(dto);
-        //                db.SaveChanges();
-        //            }
-
-        //            //Передаем сообщение через TempData
-        //            TempData["Successful message"] = "You have added a new page";
-
-        //            //Переадресовываем пользователя на метод INDEX
-        //            return RedirectToAction("Index");
-        //        }
-
     }
 }
