@@ -129,6 +129,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
         //Создаметод добавления товаров
         //GET: Admin/Shop/AddProduct
+        [HttpGet]
         public ActionResult AddProduct()
         {
             //Объявляем модел
@@ -142,5 +143,108 @@ namespace my_store_project.Areas.Admin.Controllers
             //Возвращаем модель в представление
             return View(model);
         }
+
+        //Создаметод добавления товаров ------------------------------------------------
+        //POST: Admin/Shop/AddProduct
+        [HttpPost]
+        public ActionResult AddProduct(ProductVM model, HttpPostedFileBase file) {
+            //Проверка модели на валидность
+            if (!ModelState.IsValid)
+            {
+                using (Db db = new Db())
+                {
+                    model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                    return View(model);
+                }
+            }
+
+            //Проверяем имя продукта на уникальность
+            using (Db db = new Db())
+            {
+                if (db.Products.Any(x=> x.Name == model.Name))
+                {
+                        model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                        ModelState.AddModelError("", "That product name is taken!");
+                        return View(model);
+
+
+                }
+            }
+
+            // Объявляем переменную ProductId
+            int id;
+            //Инициализируем и сохраняем модель на основе ProductDTO
+            using (Db db = new Db())
+            {
+                ProductDTO
+            }
+                //Добавляем сообщение в TempData
+                #region Upload Image
+                //Создаем необходимые ссылки на дериктории
+                //Проверяем наличие директорий (если нет, создаём)
+                //Проверяем, был ли файл загруже
+                //Проверяем расширение файла
+                //Объявляем переменную с именем изображения
+                //Сохраняем имя изображения в модель DTO
+                //Назначаем пути к оригинальному и уменьшенному изображению
+                //Сохраняем оригинальное изображение
+                //Создаем и сохраняем уменьшенную копию
+                #endregion
+                // переадресовываем пользователя
+                return RedirectToAction("AddProduct");
+        }
+
+
+
+        //            using (Db db = new Db())
+        //            {
+        //                //Объявляем переменную ProductId
+        //                int ProductId;
+
+        //                //Инициализируем класс PageDTO
+        //                ProductDTO dto = new ProductDTO();
+
+        //                //Присваеваем заголовок модели
+        //                dto.Title = model.Title.ToUpper();
+
+        //                //Проверяем, есть ли краткое описание, если нет, присваиваем его
+        //                if (string.IsNullOrWhiteSpace(model.Slug))
+        //                {
+        //                    ProductId = model.Title.Replace(" ", "-").ToLower();
+        //                }
+        //                else
+        //                {
+        //                    ProductId = model.ProductId.Replace(" ", "-").ToLower();
+        //                }
+        //                //Убеждаемся, что заголовок и краткое описание - уникальны
+        //                if (db.Pages.Any(x=> x.Title == model.Title))
+        //                {
+        //                    ModelState.AddModelError("", "That title already exist");
+        //                    return View(model);
+        //                }
+        //                else if (db.Pages.Any(x=> x.Slug == model.Slug))
+        //                {
+        //                    ModelState.AddModelError("", "That slug already exist");
+        //                    return View(model);
+        //                }
+
+        //                //Присваиваем оставшиеся значения модели
+        //                dto.ProductId = ProductId;
+        //                dto.Body = model.Body;
+        //                dto.HasSideBar = model.HasSideBar;
+        //                dto.Sorting = 100;
+
+        //                //Сохраняем модель в базу данных
+        //                db.Pages.Add(dto);
+        //                db.SaveChanges();
+        //            }
+
+        //            //Передаем сообщение через TempData
+        //            TempData["Successful message"] = "You have added a new page";
+
+        //            //Переадресовываем пользователя на метод INDEX
+        //            return RedirectToAction("Index");
+        //        }
+
     }
 }
