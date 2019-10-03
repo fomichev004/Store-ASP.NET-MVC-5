@@ -33,8 +33,7 @@ namespace my_store_project.Models.ViewModels.Shop
         public string Slug { get; set; }
         [Required]
         public string Description { get; set; }
-        public decimal Price { get; set; }
-        [Required]        
+        public decimal Price { get; set; }        
         public string CategoryName { get; set; }
         [Required]
         [DisplayName ("Category")]
