@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.IO;
 using System.Web.Mvc;
+using PagedList;
 
 namespace my_store_project.Areas.Admin.Controllers
 {
@@ -146,7 +147,7 @@ namespace my_store_project.Areas.Admin.Controllers
             return View(model);
         }
 
-        //Создаметод добавления товаров ------------------------------------------------
+        //Созда метод добавления товаров ------------------------------------------------
         //POST: Admin/Shop/AddProduct
         [HttpPost]
         public ActionResult AddProduct(ProductVM model, HttpPostedFileBase file) {
@@ -277,6 +278,40 @@ namespace my_store_project.Areas.Admin.Controllers
 
             // переадресовываем пользователя
             return RedirectToAction("AddProduct");          
+        }
+
+        //Созда метод списка товаров ------------------------------------------------
+        //POST: Admin/Shop/Products
+        [HttpGet]
+        public ActionResult Products(int? page, int? catId)
+        {
+            //Объявляем ProductVM типа list
+            List<ProductVM> listOfProductVM;
+
+            //Устанавливаем номер страницы
+            var pageNumber = page ?? 1;
+            using (Db db = new Db())
+            {
+                //Инициализируем list и заполняем данными
+                listOfProductVM = db.Products.ToArray()
+                    .Where(x => catId == null || catId == 0 || x.CategoryId == catId)
+                    .Select(x => new ProductVM(x))
+                    .ToList();
+
+                //Заполняем категории данными
+                ViewBag.Categpries = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+                //Устанавливаем выбранную категорию
+                ViewBag.SelectedCat = catId.ToString();
+            }
+
+            //Устанавливаем постраничную навигацю
+            var onePageOfProducts = listOfProductVM.ToPagedList(pageNumber, 3);
+            ViewBag.onePageOfProducts = onePageOfProducts;
+
+            //Возвращаем представление с данными        
+            return View(listOfProductVM);
+
         }
     }
 }
