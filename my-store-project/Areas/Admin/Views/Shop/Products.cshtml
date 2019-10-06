@@ -6,16 +6,17 @@
 
 @using PagedList.Mvc;
 @using PagedList;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <h2>Products</h2>
+
 <select id="SelectCategory" name="SelectCategory">
     <option value="0">All</option>
     @foreach (var item in ViewBag.Categories)
     {
-        if(ViewBag.SelectedCatCat == item.Value)
+        if (ViewBag.SelectedCatCat == item.Value)
         {
-        <option selected="selected" value="@item.Value">@item.Text</option>
+            <option selected="selected" value="@item.Value">@item.Text</option>
         }
         else
         {
@@ -23,65 +24,65 @@
         }
     }
 </select>
+<br></br>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Add new product", "AddProduct", "", new { @class = "btn btn-success" })
+    </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Slug)
+            Description
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Price
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageName)
+            Image
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Slug)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var product in ViewBag.OnePageOfProducts)
+    {
+        <tr>
+            <td>
+                @product.Name
+            </td>
 
-</table>
+            <td>
+                @product.Description
+            </td>
+
+            <td>
+                @product.Price
+            </td>
+
+            <td>
+                <a href="/admin/shop/EditProduct/@product.Id">
+                    @if (@product.ImageName == null)
+                    {
+                        <img src="/Content/img/no_image.png" />
+                    }
+                    else
+                    {
+                        <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" />
+                    }                    
+                </a>
+            </td>
+            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = product.Id }, new{ @class="btn btn-outline-info" }) |
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id}, new{ @class="btn btn-outline-danger" })
+            </td>
+        </tr>
+    }
+  </table>
+@Html.PagedListPager((IPagedList)ViewBag.onePageOfProducts, page => Url.Action("Products", new {page, catId = ViewBag.SelectedCat }))
