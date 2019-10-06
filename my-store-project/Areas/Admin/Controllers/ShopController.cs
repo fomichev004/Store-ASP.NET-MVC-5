@@ -237,6 +237,7 @@ namespace my_store_project.Areas.Admin.Controllers
                     ext != "image/jpeg" &&
                     ext != "image/pjepg" &&
                     ext != "image/gif" &&
+                    ext != "image/jfif" &&
                     ext != "image/png" &&
                     ext != "image/x-png")
                	{
@@ -299,7 +300,7 @@ namespace my_store_project.Areas.Admin.Controllers
                     .ToList();
 
                 //Заполняем категории данными
-                ViewBag.Categpries = new SelectList(db.Categories.ToList(), "Id", "Name");
+                ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
 
                 //Устанавливаем выбранную категорию
                 ViewBag.SelectedCat = catId.ToString();
