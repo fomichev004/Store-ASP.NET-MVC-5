@@ -67,18 +67,19 @@
             @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+                <br /><br />
 
-                if(@Model.Image.Name != null)
+                @if (@Model.ImageName != null)
                 {
-                    <img src="/Image/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName"/>
+                    <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" />
                 }
-                <br/><br/>
+                <br /><br />
 
                 <img id="imgpreview" src="~/Content/img/no_image.png" />
-                
+
                 <div class="col-md-10">
-                    <input type="file" , name="file" id="imageUpload" />   
-                </div>      
+                    <input type="file" , name="file" id="imageUpload" />
+                </div>
             </div>
         </div>
 
