@@ -344,7 +344,7 @@ namespace my_store_project.Areas.Admin.Controllers
 	        	//Получаем все изображения из галереи
 	        	//fn - file name
 	        	model.GalleryImages = Directory
-	        		.EnumerateFiles(Serever.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+	        		.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
 	        		.Select(fn => Path.GetFileName(fn));
         	}
         	//Возвращаем модель в представление
