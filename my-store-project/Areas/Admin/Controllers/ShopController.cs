@@ -281,8 +281,8 @@ namespace my_store_project.Areas.Admin.Controllers
             return RedirectToAction("AddProduct");          
         }
 
-        //Созда метод списка товаров ------------------------------------------------
-        //POST: Admin/Shop/Products
+        //Создаем метод списка товаров ------------------------------------------------
+        //GET: Admin/Shop/Products
         [HttpGet]
         public ActionResult Products(int? page, int? catId)
         {
@@ -314,6 +314,41 @@ namespace my_store_project.Areas.Admin.Controllers
             //Возвращаем представление с данными        
             return View(listOfProductVM);
 
+        }
+
+        //Создаем метод редактирования товаров ------------------------------------------------
+        //GET: Admin/Shop/EditProduct/id
+        [HttpGet]
+        public ActionResult EditProduct(int id)
+        {
+        	//Объявляем модель ProductVM
+        	ProductVM model;
+        	
+        	using (Db db = new Db())
+        	{
+	        	//Получаем продукт
+	        	ProductDTO dto = db.Products.Find(id);
+
+	        	//Проверяем, доступен ли продукт
+	        	if (dto == null)
+	        	{
+	        		return Content("That product does not exist");
+	        	}
+
+	        	//Инициализируем модель данными
+	        	model = new ProductVM(dto);
+
+	        	//Создаем список категорий
+	        	model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+	        	//Получаем все изображения из галереи
+	        	//fn - file name
+	        	model.GalleryImages = Directory
+	        		.EnumerateFiles(Serever.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+	        		.Select(fn => Path.GetFileName(fn));
+        	}
+        	//Возвращаем модель в представление
+        	return View(model);
         }
     }
 }
