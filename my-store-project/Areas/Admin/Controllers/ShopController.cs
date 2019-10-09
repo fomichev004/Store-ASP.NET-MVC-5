@@ -350,5 +350,69 @@ namespace my_store_project.Areas.Admin.Controllers
         	//Возвращаем модель в представление
         	return View(model);
         }
+
+         //Создаем метод редактирования товаров ------------------------------------------------
+        //POST: Admin/Shop/EditProduct
+        [HttpPost]
+        public ActionResult EditProduct(ProductVM model, HttpPostedFileBase file)
+        {
+        	//Получаем ID продукта
+        	int id = model.Id;
+
+        	//Заполняем список категориями и изображениями
+        	using (Db db = new Db())
+        	{
+        		model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+        	}
+
+        	model.GalleryImages = Directory
+	        		.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+	        		.Select(fn => Path.GetFileName(fn));
+
+        	//Проверяем модель на валидность
+	        if (!ModelState.IsValid)
+	        {
+	        	return View(model);
+	        }
+
+        	//Проверяем имя продукта на уникальность
+	        using (Db db = new Db())
+	        {
+	        	if (db. Products.Where(x => x.Id != id).Any(x => x.Name == model.Name))
+	        	{
+	        		Model.State.AddModelError("", "That product name is taken");
+	        		return View(model);
+	        	}
+	        }
+        	//Обновляем продукт
+        	using (Db db = new Db())
+        	{
+        		ProductDTO dto = db.Products.Find(id);
+
+        		dto.Name = model.Name;
+        		dto.Slug = model.Name.Replace(" ", "-").ToLower();
+        		dto.Discription = model.Discription;
+        		dto.Price = model.Price;
+        		dto.CategoryId = model.CategoryId;
+        		dto.ImageName = model.ImageName;
+
+        		CategoryDTO = catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
+        		dto.CategoryName = catDTO.Name;
+
+        		db.SaveChanges();
+        	}
+
+        	//Устанавливаем сообщение в TempData
+        	TempData["Successful message"] = "You have edited the product";
+
+        	// Логика обработки изображений
+        	#region Image Upload
+
+        	#endregion
+
+        	//Переадресовываем пользователя
+        	return RedirectToAction("EditProduct");
+
+        }
     }
 }
