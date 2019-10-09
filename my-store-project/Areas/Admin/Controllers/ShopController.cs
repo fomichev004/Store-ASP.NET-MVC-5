@@ -307,6 +307,7 @@ namespace my_store_project.Areas.Admin.Controllers
             }
 
             //Устанавливаем постраничную навигацю
+            //(pageNumber, 3) - число указывает на к-во отображаемых товаров в категории.
             var onePageOfProducts = listOfProductVM.ToPagedList(pageNumber, 3);
             ViewBag.onePageOfProducts = onePageOfProducts;
 
