@@ -380,7 +380,7 @@ namespace my_store_project.Areas.Admin.Controllers
 	        {
 	        	if (db. Products.Where(x => x.Id != id).Any(x => x.Name == model.Name))
 	        	{
-	        		Model.State.AddModelError("", "That product name is taken");
+	        		ModelState.AddModelError("", "That product name is taken");
 	        		return View(model);
 	        	}
 	        }
@@ -391,12 +391,12 @@ namespace my_store_project.Areas.Admin.Controllers
 
         		dto.Name = model.Name;
         		dto.Slug = model.Name.Replace(" ", "-").ToLower();
-        		dto.Discription = model.Discription;
+        		dto.Description = model.Description;
         		dto.Price = model.Price;
         		dto.CategoryId = model.CategoryId;
         		dto.ImageName = model.ImageName;
 
-        		CategoryDTO = catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
+        		CategoryDTO catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
         		dto.CategoryName = catDTO.Name;
 
         		db.SaveChanges();
