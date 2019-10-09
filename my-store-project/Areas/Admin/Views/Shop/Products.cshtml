@@ -14,7 +14,7 @@
     <option value="0">All</option>
     @foreach (var item in ViewBag.Categories)
     {
-        if (ViewBag.SelectedCatCat == item.Value)
+        if (ViewBag.SelectedCat == item.Value)
         {
             <option selected="selected" value="@item.Value">@item.Text</option>
         }
