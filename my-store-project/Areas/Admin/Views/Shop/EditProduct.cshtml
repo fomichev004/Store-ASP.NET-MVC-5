@@ -6,6 +6,13 @@
 
 <h2>Edit Product</h2>
 
+@if (TempData["Successful message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Successful message"]
+    </div>
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
