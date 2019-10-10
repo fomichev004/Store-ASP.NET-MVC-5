@@ -196,21 +196,21 @@ namespace my_store_project.Areas.Admin.Controllers
                 id = product.Id;
             }
 
-           //Добавляем сообщение в TempData
+           	//Добавляем сообщение в TempData
            	TempData["Successful message"] = "You have added a product!";
 
             #region Upload Image
 
-           //Создаем необходимые ссылки на дериктории
-             var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
+           	//Создаем необходимые ссылки на дериктории
+            var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
 
-             var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
-             var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
-             var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
-             var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
-             var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
+            var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
+            var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+            var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+            var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+            var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
 
-           //Проверяем наличие директорий (если нет, создаём)
+           	//Проверяем наличие директорий (если нет, создаём)
              if (!Directory.Exists(pathString1))
             	Directory.CreateDirectory(pathString1);
 
@@ -409,17 +409,101 @@ namespace my_store_project.Areas.Admin.Controllers
         	#region Image Upload
 
         	//Проверяем загрузку файла
-        	//Плдучаем расширение файла
-        	//Проверяем расширение
-        	//Устанавливаем пути загрузки
-        	//Удаляем существующие файлы и директории
-        	//Сохраняем изображения
-        	//Сохраняем оригинал и превью версии
+        	if (file != null && file.ContentLenght > 0)
+        	{       		
+	        	//Плучаем расширение файла
+	        	string ext = file.ContentType.ToLower();
+
+	        	//Проверяем расширение
+	        	 if (ext != "image/jpg" &&
+                    ext != "image/jpeg" &&
+                    ext != "image/pjepg" &&
+                    ext != "image/gif" &&
+                    ext != "image/jfif" &&
+                    ext != "image/png" &&
+                    ext != "image/x-png")
+               	{
+               		using (Db db = new Db())
+               		{
+                        ModelState.AddModelError("", "The image was not uploaded - wrong image extentsion!");
+                        return View(model);
+               		}
+               	}
+
+	        	//Устанавливаем пути загрузки
+	        	var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
+
+	            var pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+	            var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+
+	        	//Удаляем существующие файлы и директории
+	        	DirectoryInfo di1 = new DirectoryInfo(pathString1);
+	        	DirectoryInfo di2 = new DirectoryInfo(pathString2);
+
+	        	foreach (var file2 in di1.GetFiles())
+	        	{
+	        		file2.Delete();
+	        	}
+
+	        	foreach (var file3 in di2.GetFiles())
+	        	{
+	        		file3.Delete();
+	        	}
+
+	        	//Сохраняем имя изображения
+	        	string imageName = file.FileName;
+
+	        	using (Db db = new Db())
+	        	{
+	        		ProductDTO dto = db.Products.Find(id);
+	        		dto.ImageName = imageName;
+
+	        		db.SaveChanges();
+	        	}
+
+	        	//Сохраняем оригинал и превью версии
+	        	var path = string.Format($"{pathString1}\\{imageName}"); //путь к оригинальному изображению
+                var path2 = string.Format($"{pathString2}\\{imageName}"); //путь к уменьшенному изображению
+
+                //Сохраняем оригинальное изображение
+                file.SaveAs(path);
+
+                //Создаем и сохраняем уменьшенную копию
+                WebImage img = new WebImage(file.InputStream);
+                img.Resize(200, 200);
+                img.Save(path2);
+        	}
+
         	#endregion
 
         	//Переадресовываем пользователя
         	return RedirectToAction("EditProduct");
 
         }
+
+        //Создаем метод удаления товара ------------------------------------------------
+        //POST: Admin/Shop/DeleteProduct/id
+        public ActionResult DeleteProduct(int id)
+        {
+            //Удаляем товар из базы данных   	
+        	using (Db db = new Db())
+        	{	
+        		ProductDTO dto = db.Products.Find(id);
+        		db.Products.Remove(dto);
+
+        		db.SaveChanges();
+        	}
+
+			//Удаляем директории товара (изображения)
+			var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));	           
+	        var pathString = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+
+	        if (Directory.Exists(pathString))
+	        	Directory.Delete(pathString, true);        	
+
+        //Переадресовываем пользователя
+
+        	return RedirectToAction("Products");
+        }        
     }
 }
