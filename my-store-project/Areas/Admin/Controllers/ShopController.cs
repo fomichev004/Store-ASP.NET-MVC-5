@@ -409,8 +409,8 @@ namespace my_store_project.Areas.Admin.Controllers
         	#region Image Upload
 
         	//Проверяем загрузку файла
-        	if (file != null && file.ContentLenght > 0)
-        	{       		
+        	if (file != null && file.ContentLength > 0)
+        	{       	    	
 	        	//Плучаем расширение файла
 	        	string ext = file.ContentType.ToLower();
 
