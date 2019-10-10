@@ -105,16 +105,16 @@
 </form>
 
 <br></br>
-@forech(var image in Model.GalleryImages)
+@foreach(var image in Model.GalleryImages)
 {
     <!-- Проверить класс на работоспособность -->
     <div class="d-inline-block">
         <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@image"/>
-        @Html.ActionLink("Delete", "DeleteImage", "Shop", new { @class = "deleteimage", data-name = image })
+        @Html.ActionLink("Delete", "DeleteImage", "Shop", new { @class = "deleteimage", data_name = image })
     </div> 
 }
 
-/*----------------------------------------------------------------*/
+<!---------------------------------------------------------------->
 <div>
     @Html.ActionLink("Back to Products", "Products")
 </div>
