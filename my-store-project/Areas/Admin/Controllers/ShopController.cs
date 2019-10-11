@@ -28,7 +28,7 @@ namespace my_store_project.Areas.Admin.Controllers
             return View(categoryVMList);
         }
 
-        //POST:Admin/Shop/AddNewCategory
+        //POST:Admin/Shop/AddNewCategory ------------------------------------------------
         [HttpPost]
         public string AddNewCategory(string catName)
         {
@@ -60,7 +60,7 @@ namespace my_store_project.Areas.Admin.Controllers
         	return id;
         }
 
-        //POST: Admin/Shop/ReorderCategories  
+        //POST: Admin/Shop/ReorderCategories  ------------------------------------------------
         [HttpPost]
         public void ReorderCategories(int[] id)
         {
@@ -83,7 +83,7 @@ namespace my_store_project.Areas.Admin.Controllers
             }
         }
 
-        //GET: Admin/Shop/DeleteCategory/id  
+        //GET: Admin/Shop/DeleteCategory/id  ------------------------------------------------
         public ActionResult DeleteCategory(int id)
         {
             using (Db db = new Db())
@@ -105,7 +105,7 @@ namespace my_store_project.Areas.Admin.Controllers
             return RedirectToAction("Categories");
         }
 
-        //POST: Admin/Shop/RenameCategory/id  
+        //POST: Admin/Shop/RenameCategory/id  ------------------------------------------------
         [HttpPost]
         public string RenameCategory(string newCatName, int id)
         {
@@ -130,7 +130,7 @@ namespace my_store_project.Areas.Admin.Controllers
             return "ok";
         }
 
-        //Создаметод добавления товаров
+        //Создаметод добавления товаров ------------------------------------------------
         //GET: Admin/Shop/AddProduct
         [HttpGet]
         public ActionResult AddProduct()
@@ -271,7 +271,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
                 //Создаем и сохраняем уменьшенную копию
                 WebImage img = new WebImage(file.InputStream);
-                img.Resize(200, 200);
+                img.Resize(200, 200).Crop(1, 1);
                 img.Save(path2);
             }
 
@@ -470,7 +470,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
                 //Создаем и сохраняем уменьшенную копию
                 WebImage img = new WebImage(file.InputStream);
-                img.Resize(200, 200);
+                img.Resize(200, 200).Crop(1, 1);
                 img.Save(path2);
         	}
 
@@ -504,6 +504,55 @@ namespace my_store_project.Areas.Admin.Controllers
         //Переадресовываем пользователя
 
         	return RedirectToAction("Products");
-        }        
+        } 
+
+        //Создаем метод добавления изображения в галерею ------------------------------------------------
+        //POST: Admin/Shop/SaveGalleryImages/id
+        [HttpPost]
+        public void	SaveGalleryImages(int id)
+        {
+        	//Перебираем все полученные файлы
+        	foreach	(string fileName in Request.Files)
+        	{
+	        	//Инициализируем файлы	
+	        	HttpPostedFileBase file	= Request.Files[fileName];
+
+	        	//Проверяем на Null
+	        	if (file != null && file.ContentLength > 0)
+	        	{ 
+	        		//Назначаем	 пути к директории
+	        		var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
+
+	        		string pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+	        		string pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
+
+		        	//Назначаем	пути изображений
+		        	var path = string.Format($"{pathString1}\\{file.FileName}");
+		        	var path2 = string.Format($"{pathString1}\\{file.FileName}");
+
+		        	//Сохраняем	оригинальные изображения
+		        	file.SaveAs(path);
+
+		        	WebImage img = new WebImage(file.InputStream);
+		        	img.Resize(200, 200).Crop(1, 1);
+		        	img.Save(path2);
+	        	}
+	        }
+        }
+
+        //Создаем метод удаления изображения из галереи ------------------------------------------------
+        //POST: Admin/Shop/DeleteImage/id/imageName
+        [HttpPost]
+        public void DeleteImage(int id, string imageName)
+        {
+            string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery" + imageName);
+            string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/Thumbs" + imageName);
+
+            if (System.Io.File.Exists(fullPath1))
+                System.Io.File.Delete(fullPath1);
+            
+            if (System.Io.File.Exists(fullPath2))
+                System.Io.File.Delete(fullPath2);
+        }
     }
 }
