@@ -546,13 +546,13 @@ namespace my_store_project.Areas.Admin.Controllers
         public void DeleteImage(int id, string imageName)
         {
             string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery" + imageName);
-            string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/Thumbs" + imageName);
+            string fullPath2 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/Thumbs" + imageName);
 
-            if (System.Io.File.Exists(fullPath1))
-                System.Io.File.Delete(fullPath1);
+            if (System.IO.File.Exists(fullPath1))
+                System.IO.File.Delete(fullPath1);
             
-            if (System.Io.File.Exists(fullPath2))
-                System.Io.File.Delete(fullPath2);
+            if (System.IO.File.Exists(fullPath2))
+                System.IO.File.Delete(fullPath2);
         }
     }
 }
