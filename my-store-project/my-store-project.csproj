@@ -923,7 +923,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Pages\Index.cshtml" />
-    <Content Include="Views\Pages\_CategoryMenuPartial.cshtml" />
     <Content Include="Views\Pages\_PagesMenuPartial.cshtml" />
     <Content Include="Views\Pages\_SidebarPartial.cshtml" />
     <Content Include="Views\Shop\_CategoryMenuPartial.cshtml" />
