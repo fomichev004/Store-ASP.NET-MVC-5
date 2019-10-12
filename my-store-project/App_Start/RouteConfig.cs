@@ -14,13 +14,13 @@ namespace my_store_project
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
             // 18
-            routes.MapRoute("SidebarPartial", "{Pages/SidebarPartial}", new {controller = "Pages", action = "SidebarPartial"}, 
+            routes.MapRoute("SidebarPartial", "Pages/SidebarPartial", new {controller = "Pages", action = "SidebarPartial"}, 
                 new []{"my_store_project.Controllers"});
                 
              routes.MapRoute("Shop", "Shop/{action}/{name}", new {controller = "Shop", action = "Index", name = UrlParameter.Optional }, 
                 new []{"my_store_project.Controllers"});
 
-            routes.MapRoute("PagesMenuPartial", "{Pages/PagesMenuPa  rtial}", new {controller = "Pages", action = "PagesMenuPartial"}, 
+            routes.MapRoute("PagesMenuPartial", "Pages/PagesMenuPartial", new {controller = "Pages", action = "PagesMenuPartial"}, 
                 new []{"my_store_project.Controllers"});
             
             routes.MapRoute("Pages", "{page}", new {controller = "Pages", action = "Index"}, 
