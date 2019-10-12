@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic; 
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
 using my_store_project.Models.ViewModels.Pages;
+using my_store_project.Models.Data;
 
 namespace my_store_project.Controllers
 {    
@@ -13,7 +15,7 @@ namespace my_store_project.Controllers
         public ActionResult Index(string page = "")
         {
             //Получаем/устанавливаем краткий заголовок (SLUG)
-            if (page = "")
+            if (page == "")
                 page = "home";
 
             //Объявляем модель и класс DTO
@@ -23,7 +25,7 @@ namespace my_store_project.Controllers
             //Проверяем, доступна ли страница
             using (Db db = new Db())
             {
-                if (!db.Pages.Any(x => x.Slug.Equals(pages)))
+                if (!db.Pages.Any(x => x.Slug.Equals(page)))
                 return RedirectToAction("Index", new {page = ""});
             }
 
@@ -37,7 +39,7 @@ namespace my_store_project.Controllers
             ViewBag.PageTitle = dto.Title;
 
             //Проверяем боковую панель
-            if (dto.Hassidebar == true)
+            if (dto.HasSideBar == true)
             {
                 ViewBag.Sidebar = "Yes";
             }
@@ -64,7 +66,7 @@ namespace my_store_project.Controllers
                 PageVMList = db.Pages.ToArray().OrderBy( x=> x.Sorting).Where( x => x.Slug != "home").Select(x => new PageVM(x)).ToList();
             }
             // Возвращаем частичное представление с листом ланных
-            return PartialView("_PagesMenuPartial", pageVMList);
+            return PartialView("_PagesMenuPartial", PageVMList);
         }
         
         public ActionResult SidebarPartial()
@@ -75,9 +77,9 @@ namespace my_store_project.Controllers
             // Инициализируем модель
             using (Db db = new Db())
             {
-                SidebarDTO dto = db.Sidebar.Find(1);
+                SidebarDTO dto = db.Sidebars.Find(1);
 
-                model - new SidebarVM(dto);
+                model = new SidebarVM(dto);
             }
 
             // Возвращаем модель в частичное представление
