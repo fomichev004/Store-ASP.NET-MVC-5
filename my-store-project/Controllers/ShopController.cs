@@ -1,3 +1,5 @@
+using my_store_project.Models.Data;
+using my_store_project.Models.ViewModels.Shop;
 using System;
 using System.Collections.Generic; 
 using System.Linq;
