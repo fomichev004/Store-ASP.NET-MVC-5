@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using my_store_project.Models.ViewModels.Pages;
+using System.IO;
 
 namespace my_store_project.Controllers
 {    
@@ -47,7 +48,7 @@ namespace my_store_project.Controllers
                 int catId = categoryDTO.Id;
 
                 // Инициализируем список данными
-                productVMList == db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x)).ToList();
+                productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x)).ToList();
 
                 // Получаем имя категории
                 var productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
@@ -102,6 +103,7 @@ namespace my_store_project.Controllers
             model.GalleryImages = Directory
                 .EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
                 .Select(fn => Path.GetFileName(fn));
+
 
             // Возвращаем модель в представление
             return View("ProductDetails", model);
