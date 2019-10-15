@@ -78,8 +78,8 @@ table.sorting tr:not(.home){
     margin: 10px;
 }
 
-div.ajaxmsg{
-    background: green;
+div.ajaxmsg {
+    background: #39C16C;
     color: #ffffff;
     padding: 10px;
     display: none;
