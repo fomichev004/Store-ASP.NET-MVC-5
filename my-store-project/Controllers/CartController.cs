@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System.Web.Mvc;
-using my_store_project.Models.ViewModels.Cart;
 using my_store_project.Models.Data;
+using my_store_project.Models.ViewModels.Cart;
 
 namespace my_store_project.Controllers
 {    
