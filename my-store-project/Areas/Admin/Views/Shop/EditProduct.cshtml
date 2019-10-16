@@ -90,21 +90,20 @@
         </div>
     </div>
 }
-
+<!--15-->
 <hr/>
 @if (!Model.GalleryImages.Any())
 {
     <h3>There are no gallery images for this product.</h3>
 }
-<form action="/admin/shop/SaveGalleryImages" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone-form">
+<form action="/admin/shop/SaveGalleryImages" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
     <div class="fallback">
         <input type="file" name="file" multiple=""/>
         <input type="submit" value="Upload"/>
-    </div>
-    
+    </div>    
 </form>
 
-<br></br>
+<br/><br/>
 
     <div class="row">
         @foreach(var image in Model.GalleryImages)
@@ -116,7 +115,7 @@
                         <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@image"/>
                     </div>
                     <div id="btn_delete_img_gallery">
-                        @Html.ActionLink("Delete", "DeleteImage", "Shop", new { @class = "deleteimage btn btn-danger", data_name = image,  })
+                        @Html.ActionLink("Delete", "DeleteImage", "Shop", new { @class = "deleteimage btn btn-danger", data_name = image })
                     </div>
                 </div>
             </div>
@@ -138,7 +137,7 @@
     <script>
             /* Dropzone js*/
 
-        Dropzone.options.dropzone-form = {
+        Dropzone.options.dropzoneForm = {
             acceptedFiles: "image/*",
             init: function () {
                 this.on("complete",
