@@ -340,3 +340,6 @@ ASALocalRun/
 healthchecksdb
 *.png
 *.jpg
+*.jpeg
+*.jfif
+my-store-project/my-store-project.csproj
