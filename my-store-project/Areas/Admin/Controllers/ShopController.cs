@@ -481,7 +481,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
         }
 
-        //Создаем метод удаления товара ------------------------------------------------
+        //15--Создаем метод удаления товара ------------------------------------------------
         //POST: Admin/Shop/DeleteProduct/id
         public ActionResult DeleteProduct(int id)
         {
@@ -506,7 +506,7 @@ namespace my_store_project.Areas.Admin.Controllers
         	return RedirectToAction("Products");
         } 
 
-        //Создаем метод добавления изображения в галерею ------------------------------------------------
+        //16--Создаем метод добавления изображения в галерею ------------------------------------------------
         //POST: Admin/Shop/SaveGalleryImages/id
         [HttpPost]
         public void	SaveGalleryImages(int id)
@@ -540,7 +540,7 @@ namespace my_store_project.Areas.Admin.Controllers
 	        }
         }
 
-        //Создаем метод удаления изображения из галереи ------------------------------------------------
+        //16--Создаем метод удаления изображения из галереи ------------------------------------------------
         //POST: Admin/Shop/DeleteImage/id/imageName
         [HttpPost]
         public void DeleteImage(int id, string imageName)
