@@ -12,6 +12,9 @@ namespace my_store_project
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            // 20
+             routes.MapRoute("Cart", "Cart/{action}/{id}", new {controller = "Cart", action = "Index", id = UrlParameter.Optional }, 
+                new []{"my_store_project.Controllers"});            
             
             // 18
             routes.MapRoute("SidebarPartial", "Pages/SidebarPartial", new {controller = "Pages", action = "SidebarPartial"}, 
