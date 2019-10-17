@@ -106,7 +106,7 @@
 <br/><br/>
 
     <div class="row">
-        @foreach(var image in Model.GalleryImages)
+        @foreach (var item in Model.GalleryImages)
         {
             <div class="col">
                 <div class="galleryStyle">
@@ -136,7 +136,7 @@
     <script>
             /* Dropzone js*/
 
-        Dropzone.options.dropzoneForm = {
+          Dropzone.options.dropzoneForm = {
             acceptedFiles: "image/*",
             init: function () {
                 this.on("complete",
