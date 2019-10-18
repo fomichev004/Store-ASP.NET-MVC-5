@@ -6,7 +6,7 @@
 
 <h2>Cart Details</h2>
 
-if (ViewBag.Message != null)
+@if (ViewBag.Message != null)
 {
     <h3>@ViewBag.Message</h3>
 }
@@ -33,36 +33,36 @@ else
             <th>
                 Total
             </th>
-            <th>
-            </th>
+            <th></th>
         </tr>
 
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image"/>
-            </td>
+        @foreach (var item in Model) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image"/>
+                </td>
 
-            <td>
-                <a href="#" class="incProduct" data-id="@item.ProductId">+</a>
-                <a href="#" class="decProduct" data-id="@item.ProductId">-</a>
-                <a href="#" class="removeProduct" data-id="@item.ProductId">Remove</a>
-            </td>
+                <td>
+                    <a href="#" class="incProduct" data-id="@item.ProductId">+</a>
+                    <a href="#" class="decProduct" data-id="@item.ProductId">-</a>
+                    <a href="#" class="removeProduct" data-id="@item.ProductId">Remove</a>
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Total) €
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total) €
+                </td>
 
-        </tr>
+            </tr>
     }
 
     <tr>
