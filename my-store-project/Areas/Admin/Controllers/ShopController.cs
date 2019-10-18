@@ -235,7 +235,7 @@ namespace my_store_project.Areas.Admin.Controllers
                 //Проверяем расширение файла
                 if (ext != "image/jpg" &&
                     ext != "image/jpeg" &&
-                    ext != "image/pjepg" &&
+                    ext != "image/pjpeg" &&
                     ext != "image/gif" &&
                     ext != "image/jfif" &&
                     ext != "image/png" &&
@@ -417,7 +417,7 @@ namespace my_store_project.Areas.Admin.Controllers
 	        	//Проверяем расширение
 	        	 if (ext != "image/jpg" &&
                     ext != "image/jpeg" &&
-                    ext != "image/pjepg" &&
+                    ext != "image/pjpeg" &&
                     ext != "image/gif" &&
                     ext != "image/jfif" &&
                     ext != "image/png" &&
@@ -542,7 +542,6 @@ namespace my_store_project.Areas.Admin.Controllers
 
         //16--Создаем метод удаления изображения из галереи ------------------------------------------------
         //POST: Admin/Shop/DeleteImage/id/imageName
-        [HttpPost]
         public void DeleteImage(int id, string imageName)
         {
             string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery" + imageName);

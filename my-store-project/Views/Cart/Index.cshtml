@@ -4,60 +4,76 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Cart Details</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Total)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+if (ViewBag.Message != null)
+{
+    <h3>@ViewBag.Message</h3>
 }
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+               Price
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                <!--Свободная ячейка для кнопок измененния к-ва товаров -->
+            </th>
 
-</table>
+            <th>
+                Total
+            </th>
+            <th>
+            </th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image"/>
+            </td>
+
+            <td>
+                <a href="#" class="incProduct" data-id="@item.ProductId">+</a>
+                <a href="#" class="decProduct" data-id="@item.ProductId">-</a>
+                <a href="#" class="removeProduct" data-id="@item.ProductId">Remove</a>
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Total) €
+            </td>
+
+        </tr>
+    }
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>@ViewBag.GrandTotal €</td>
+    </tr>
+
+    </table>
+}
