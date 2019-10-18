@@ -542,6 +542,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
         //16--Создаем метод удаления изображения из галереи ------------------------------------------------
         //POST: Admin/Shop/DeleteImage/id/imageName
+        [HttpPost]
         public void DeleteImage(int id, string imageName)
         {
             string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery" + imageName);
