@@ -271,7 +271,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
                 //Создаем и сохраняем уменьшенную копию
                 WebImage img = new WebImage(file.InputStream);
-                img.Resize(200, 200).Crop(1, 1);
+                img.Resize(200, 200).Crop(1,1);
                 img.Save(path2);
             }
 
@@ -470,7 +470,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
                 //Создаем и сохраняем уменьшенную копию
                 WebImage img = new WebImage(file.InputStream);
-                img.Resize(200, 200).Crop(1, 1);
+                img.Resize(200, 200).Crop(1,1);
                 img.Save(path2);
         	}
 
@@ -534,7 +534,7 @@ namespace my_store_project.Areas.Admin.Controllers
 		        	file.SaveAs(path);
 
 		        	WebImage img = new WebImage(file.InputStream);
-		        	img.Resize(200, 200).Crop(1, 1);
+		        	img.Resize(200, 200).Crop(1,1);
 		        	img.Save(path2);
 	        	}
 	        }
