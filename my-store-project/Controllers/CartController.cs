@@ -76,35 +76,56 @@ namespace my_store_project.Controllers
         public ActionResult AddToCartPartial(int id)
         {
             // Объявляем лист, параметризированный типом CartVM
-
+            List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
             
             // Объявляем модель CartVM
-
+            CartVM model = new CartVM();
             
-            // Получаем продукт
-
             
-            // Проверяем, находится ли товар уже в корзине
+            using (Db db = new Db())
+            {
+                // Получаем продукт
+                ProductDTO product = db.Products.Find(id);
 
+                // Проверяем, находится ли товар уже в корзине
+                var productInCart = cart.FirstOrDefault(x => x.ProductId == id)
             
-            // Если нет, то добавляем товар в корзин
-
-            
-            // Если да, добавляем еденицу товара
-
-            
+                // Если нет, то добавляем товар в корзин
+                if (productInCart == nul)
+                {
+                    cart.Add(new CartVM()
+                    {
+                        ProductId = product.Id;
+                        ProductName = product.Name;
+                        Quantity = 1;
+                        Price = product.Price;
+                        Image = product.ImageName;
+                    });
+                }
+                // Если да, добавляем еденицу товара
+                else
+                {
+                    productInCart.Quantity++;
+                }
+            }            
             // Получаем общее количество, цену и добавляем данные в модель
+            int qty = 0;
+            decimal price = 0m;
 
+            foreach (var item in cart)
+            {
+                qty += item.Quantity();
+                price += item.Quantity * item.Price;
+            }
             
+            model.Quantity == qty;
+            model.Price == price;
+
             // сохраняем состояние корзины в сессию
-
+            Session["cart"] == cart;
             
-            // Возвращаем частичное представление с моделью
-
-            
-
-
-            return View();
+            // Возвращаем частичное представление с моделью      
+            return PartialView(model);
         }
     }
 }
