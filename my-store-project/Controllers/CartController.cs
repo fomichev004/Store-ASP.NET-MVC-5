@@ -90,7 +90,7 @@ namespace my_store_project.Controllers
                 var productInCart = cart.FirstOrDefault(x => x.ProductId == id);
             
                 // Если нет, то добавляем товар в корзин
-                if (productInCart == nul)
+                if (productInCart == null)
                 {
                     cart.Add(new CartVM()
                     {
@@ -113,15 +113,15 @@ namespace my_store_project.Controllers
 
             foreach (var item in cart)
             {
-                qty += item.Quantity();
+                qty += item.Quantity;
                 price += item.Quantity * item.Price;
             }
             
-            model.Quantity == qty;
-            model.Price == price;
+            model.Quantity = qty;
+            model.Price = price;
 
             // сохраняем состояние корзины в сессию
-            Session["cart"] == cart;
+            Session["cart"] = cart;
             
             // Возвращаем частичное представление с моделью      
             return PartialView("_AddToCartPartial", model);
