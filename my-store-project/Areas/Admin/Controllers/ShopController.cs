@@ -528,7 +528,7 @@ namespace my_store_project.Areas.Admin.Controllers
 
 		        	//Назначаем	пути изображений
 		        	var path = string.Format($"{pathString1}\\{file.FileName}");
-		        	var path2 = string.Format($"{pathString1}\\{file.FileName}");
+		        	var path2 = string.Format($"{pathString2}\\{file.FileName}");
 
 		        	//Сохраняем	оригинальные изображения
 		        	file.SaveAs(path);
