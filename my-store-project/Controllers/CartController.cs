@@ -79,8 +79,7 @@ namespace my_store_project.Controllers
             List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
             
             // Объявляем модель CartVM
-            CartVM model = new CartVM();
-            
+            CartVM model = new CartVM();            
             
             using (Db db = new Db())
             {
@@ -88,18 +87,18 @@ namespace my_store_project.Controllers
                 ProductDTO product = db.Products.Find(id);
 
                 // Проверяем, находится ли товар уже в корзине
-                var productInCart = cart.FirstOrDefault(x => x.ProductId == id)
+                var productInCart = cart.FirstOrDefault(x => x.ProductId == id);
             
                 // Если нет, то добавляем товар в корзин
                 if (productInCart == nul)
                 {
                     cart.Add(new CartVM()
                     {
-                        ProductId = product.Id;
-                        ProductName = product.Name;
-                        Quantity = 1;
-                        Price = product.Price;
-                        Image = product.ImageName;
+                        ProductId = product.Id,
+                        ProductName = product.Name,
+                        Quantity = 1,
+                        Price = product.Price,
+                        Image = product.ImageName
                     });
                 }
                 // Если да, добавляем еденицу товара
@@ -125,7 +124,7 @@ namespace my_store_project.Controllers
             Session["cart"] == cart;
             
             // Возвращаем частичное представление с моделью      
-            return PartialView(model);
+            return PartialView("_AddToCartPartial", model);
         }
     }
 }
