@@ -140,7 +140,7 @@ namespace my_store_project.Controllers
             using (Db db = new Db())
             {            
                 // получаем модель CartVM из листа
-                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
+                CartVM model = cart.FirstOrDefault( x => x.ProductId == productId);
 
                 // добавляем количество
                 model.Quantity++;
