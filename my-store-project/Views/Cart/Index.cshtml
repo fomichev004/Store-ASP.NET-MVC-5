@@ -42,11 +42,11 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
-                <td>
+                <td class="qty@(item.ProductId)">
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Price)€
                 </td>
                 <td>
                     <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image"/>
@@ -58,8 +58,8 @@ else
                     <a href="#" class="removeProduct" data-id="@item.ProductId">Remove</a>
                 </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Total) €
+                <td class="total@(item.ProductId)">
+                    @Html.DisplayFor(modelItem => item.Total)€
                 </td>
 
             </tr>
@@ -72,8 +72,12 @@ else
         <td></td>
         <td></td>
         <td></td>
-        <td>@ViewBag.GrandTotal €</td>
+        <td class="grandtotal">Grand Total: <span>@ViewBag.GrandTotal</span>€</td>
     </tr>
 
     </table>
+}
+@section Scripts
+{
+    <script src="~/Content/ShopJS/IncrementProdbctScript.js"></script>
 }
