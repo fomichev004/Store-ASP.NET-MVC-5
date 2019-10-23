@@ -53,9 +53,9 @@ else
                 </td>
 
                 <td>
-                    <a href="#" class="incProduct" data-id="@item.ProductId">+</a>
-                    <a href="#" class="decProduct" data-id="@item.ProductId">-</a>
-                    <a href="#" class="removeProduct" data-id="@item.ProductId">Remove</a>
+                    <a href="#" class="incproduct" data-id="@item.ProductId">+</a>
+                    <a href="#" class="decproduct" data-id="@item.ProductId">-</a>
+                    <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
                 </td>
 
                 <td class="total@(item.ProductId)">
@@ -72,7 +72,13 @@ else
             <td></td>
             <td></td>
             <td></td>
-            <td class="grandtotal">Grand Total: <span>@ViewBag.GrandTotal</span>€</td>
+            <td class="grandtotal">
+                Grand Total: 
+                    <span>
+                        @ViewBag.GrandTotal
+                    </span>
+                    €
+            </td>
         </tr>
 
     </table>
