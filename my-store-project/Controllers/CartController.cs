@@ -150,7 +150,53 @@ namespace my_store_project.Controllers
 
                 // Возвращаем JSON ответ с данными
                 return Json(result, JsonRequestBehavior.AllowGet);
-            }  
+            }
+        }
+
+        // 22
+        //GET /cart/DecrementProduct
+        public ActionResult DecrementProduct(int id)
+        {
+            // Объявляем List cart
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+            
+            using (Db db = new Db())
+            {            
+                // получаем модель CartVM из листа
+                CartVM model = cart.FirstOrDefault( x => x.ProductId == productId);
+
+                // Отнимаем количество
+                if (model.Quantity > 1)
+                {
+                    model.Quantity--;
+                }
+                else
+                {
+                    model.Quantity = 0;
+                    cart.Remove(model);
+                }
+
+                // сохраняем необходимые еданные
+                var result = new { qty = model.Quantity, price = model.Price};
+
+                // Возвращаем JSON ответ с данными
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        //GET /cart/RemoveProduct
+        public void RemoveProduct(int id)
+        {
+            // Объявляем List cart
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+            
+            using (Db db = new Db())
+            {
+                // получаем модель CartVM из листа
+                CartVM model = cart.FirstOrDefault( x => x.ProductId == productId);
+                
+                cart.Remove(model);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 $(function () {
 
-    $("a.incproduct").click(function (e) {
+    $("a.incProduct").click(function (e) {
         e.preventDefault();
 
         var productId = $(this).data("id");
@@ -14,7 +14,7 @@ $(function () {
 
             $("td.total" + productId).html(priceHtml);
 
-            var gt = parseFloat($("td.grandtotal span").text())
+            var gt = parseFloat($("td.grandtotal span").text());
             var grandtotal = (gt + data.price).toFixed(2);
 
             $("td.grandtotal span").text(grandtotal);
