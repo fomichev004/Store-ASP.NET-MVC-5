@@ -132,7 +132,7 @@ namespace my_store_project.Controllers
         
         // 21
         //GET /cart/IncrementProduct
-        public JsonRult IncrementProduct(int productId)
+        public JsonResult IncrementProduct(int productId)
         {
             // Объявляем List cart
             List<CartVM> cart = Session["cart"] as List<CartVM>;
