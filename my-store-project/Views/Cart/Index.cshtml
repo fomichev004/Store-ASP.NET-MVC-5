@@ -21,7 +21,7 @@ else
                 Quantity
             </th>
             <th>
-               Price
+                Price
             </th>
             <th>
                 Image
@@ -36,7 +36,7 @@ else
             <th></th>
         </tr>
 
-        @foreach (var item in Model) 
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -49,7 +49,7 @@ else
                     @Html.DisplayFor(modelItem => item.Price)€
                 </td>
                 <td>
-                    <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image"/>
+                    <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
                 </td>
 
                 <td>
@@ -63,21 +63,21 @@ else
                 </td>
 
             </tr>
-    }
+        }
 
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td class="grandtotal">Grand Total: <span>@ViewBag.GrandTotal</span>€</td>
-    </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="grandtotal">Grand Total: <span>@ViewBag.GrandTotal</span>€</td>
+        </tr>
 
     </table>
 }
 @section Scripts
 {
-    <script src="~/Content/ShopJS/IncrementProdbctScript.js"></script>
+     <script src="~/Content/ShopJS/IncrementProductScript.js"></script>
 }
