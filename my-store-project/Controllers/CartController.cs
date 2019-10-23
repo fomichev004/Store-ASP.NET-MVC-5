@@ -59,6 +59,9 @@ namespace my_store_project.Controllers
                     qty += item.Quantity;
                     price += item.Quantity * item.Price;
                 }
+
+                model.Quantity = qty;
+                model.Price = price;
             }
             else
             {
@@ -125,6 +128,29 @@ namespace my_store_project.Controllers
             
             // Возвращаем частичное представление с моделью      
             return PartialView("_AddToCartPartial", model);
+        }
+        
+        // 21
+        //GET /cart/IncrementProduct
+        public JsonRult IncrementProduct(int productId)
+        {
+            // Объявляем List cart
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+            
+            using (Db db = new Db())
+            {            
+                // получаем модель CartVM из листа
+                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+                // добавляем количество
+                model.Quantity++;
+
+                // сохраняем необходимые еданные
+                var result = new { qty = model.Quantity, price = model.Price};
+
+                // Возвращаем JSON ответ с данными
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }  
         }
     }
 }
