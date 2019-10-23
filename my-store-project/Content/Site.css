@@ -93,3 +93,7 @@ span.loader{
 .ib {
     display: inline-block !important;
 }
+
+.grandTotal{
+    font-weight: bold;
+}
