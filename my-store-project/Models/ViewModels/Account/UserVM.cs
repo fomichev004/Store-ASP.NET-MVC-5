@@ -38,7 +38,7 @@ namespace my_store_project.Models.ViewModels.Account
         [Required]
         public string Password { get; set; }
         [Required]
-        public string ConfirmPassword { get; set; }  
+        public string ConfirmPassword { get; set; }
     }
 }
  
