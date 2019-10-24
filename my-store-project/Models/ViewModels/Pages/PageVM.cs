@@ -13,7 +13,6 @@ namespace my_store_project.Models.ViewModels.Pages
        
         public PageVM()
         {
-
         }
 
         public PageVM(PagesDTO row)
