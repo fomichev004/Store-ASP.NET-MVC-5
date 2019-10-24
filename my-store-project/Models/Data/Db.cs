@@ -10,9 +10,15 @@ namespace my_store_project.Models.Data
 
     {
         public DbSet<PagesDTO> Pages { get; set; }
+        // 6
         public DbSet<SidebarDTO> Sidebars { get; set; }
+        // 8
         public DbSet<CategoryDTO> Categories { get; set; }
+        // 11
         public DbSet<ProductDTO> Products { get; set; }
+        // 22
+        public DbSet<UserDTO> Users { get; set; }
+        public DbSet<RoleDTO> Roles { get; set; }
     }
     
 }
