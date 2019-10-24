@@ -27,17 +27,22 @@ namespace my_store_project.Models.ViewModels.Account
 
         public int Id { get; set; }
         [Required]
+        [DisplayName ("First Name")]
         public string FirstName { get; set; }
         [Required]
+        [DisplayName ("Last Name")]
         public string LastName { get; set; }
         [Required]
         [DataType(DataType.EmailAdress)]
+        [DisplayName ("Email")]
         public string EmailAdress { get; set; }
         [Required]
+        [DisplayName ("User Name")]
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
         [Required]
+        [DisplayName ("Confirm Password")]
         public string ConfirmPassword { get; set; }
     }
 }
