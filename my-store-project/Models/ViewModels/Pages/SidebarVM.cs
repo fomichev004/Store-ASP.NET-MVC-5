@@ -12,7 +12,6 @@ namespace my_store_project.Models.ViewModels.Pages
     {
         public SidebarVM()
         {
-
         }
 
         public SidebarVM (SidebarDTO row)
