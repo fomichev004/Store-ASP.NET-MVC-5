@@ -12,18 +12,30 @@ namespace my_store_project.Controllers
     // --23--
     public class AccountController : Controller
     {
+        //GET: Account
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login");
         }
 
-        // GET: account/create-account
-        
+        // GET: account/create-account        
         [ActionName("create-account")]
         [HttpGet]
         public ActionResult CreateAccount()
         {
             return View("CreateAccount");
         }
+        //GET: Account/Login
+        [HttpGet]
+        public ActionResult Login()
+        {
+            // подтвердить, что пользователь не авторизован
+            string userName = User.Identity.Name;
+            
+            if (!string.IsNullOrEmpty(userName))
+                return RedirectToAction("user-profile");
+            
+        }
+        
     }
 }
