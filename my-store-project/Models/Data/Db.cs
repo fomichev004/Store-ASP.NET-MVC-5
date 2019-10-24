@@ -19,6 +19,8 @@ namespace my_store_project.Models.Data
         // 22
         public DbSet<UserDTO> Users { get; set; }
         public DbSet<RoleDTO> Roles { get; set; }
+        //23
+        public DbSet<UserRoleDTO> UserRoles { get; set; }
     }
     
 }
