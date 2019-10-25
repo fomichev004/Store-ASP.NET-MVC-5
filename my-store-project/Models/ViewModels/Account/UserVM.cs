@@ -15,12 +15,12 @@ namespace my_store_project.Models.ViewModels.Account
         {
         }
 
-        public UserVM(UsertDTO row)
+        public UserVM(UserDTO row)
         {
             Id = row.Id;
             FirstName = row.FirstName;
             LastName = row.LastName;
-            EmailAdress = row.EmailAdress;
+            EmailAddress = row.EmailAddress;
             Username = row.Username;
             Password = row.Password;
         }
@@ -33,9 +33,9 @@ namespace my_store_project.Models.ViewModels.Account
         [DisplayName ("Last Name")]
         public string LastName { get; set; }
         [Required]
-        [DataType(DataType.EmailAdress)]
+        [DataType (DataType.EmailAddress)]
         [DisplayName ("Email")]
-        public string EmailAdress { get; set; }
+        public string EmailAddress { get; set; }
         [Required]
         [DisplayName ("User Name")]
         public string Username { get; set; }
