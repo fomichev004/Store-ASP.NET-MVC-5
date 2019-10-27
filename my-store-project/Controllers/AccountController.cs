@@ -34,7 +34,10 @@ namespace my_store_project.Controllers
             string userName = User.Identity.Name;
             
             if (!string.IsNullOrEmpty(userName))
-                return RedirectToAction("user-profile");            
+                return RedirectToAction("user-profile");
+
+            //возвращаем представление
+            return View();
         }
         
     }
