@@ -25,6 +25,7 @@ namespace my_store_project.Controllers
         {
             return View("CreateAccount");
         }
+
         //GET: Account/Login
         [HttpGet]
         public ActionResult Login()
@@ -33,8 +34,7 @@ namespace my_store_project.Controllers
             string userName = User.Identity.Name;
             
             if (!string.IsNullOrEmpty(userName))
-                return RedirectToAction("user-profile");
-            
+                return RedirectToAction("user-profile");            
         }
         
     }
