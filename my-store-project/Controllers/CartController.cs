@@ -140,7 +140,7 @@ namespace my_store_project.Controllers
             using (Db db = new Db())
             {            
                 // получаем модель CartVM из листа
-                CartVM model = cart.FirstOrDefault( x => x.ProductId == productId);
+                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
 
                 // добавляем количество
                 model.Quantity++;
@@ -155,7 +155,7 @@ namespace my_store_project.Controllers
 
         // 22
         //GET /cart/DecrementProduct
-        public ActionResult DecrementProduct(int id)
+        public ActionResult DecrementProduct(int productId)
         {
             // Объявляем List cart
             List<CartVM> cart = Session["cart"] as List<CartVM>;
@@ -163,7 +163,7 @@ namespace my_store_project.Controllers
             using (Db db = new Db())
             {            
                 // получаем модель CartVM из листа
-                CartVM model = cart.FirstOrDefault( x => x.ProductId == productId);
+                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
 
                 // Отнимаем количество
                 if (model.Quantity > 1)
@@ -185,7 +185,7 @@ namespace my_store_project.Controllers
         }
 
         //GET /cart/RemoveProduct
-        public void RemoveProduct(int id)
+        public void RemoveProduct(int productId)
         {
             // Объявляем List cart
             List<CartVM> cart = Session["cart"] as List<CartVM>;
