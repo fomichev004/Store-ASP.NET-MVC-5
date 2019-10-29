@@ -9,7 +9,7 @@ namespace my_store_project.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(my_store_project.Models.Data.Db context)
