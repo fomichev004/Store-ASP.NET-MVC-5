@@ -481,26 +481,18 @@
     <Content Include="fileman\Uploads\roxy-fileman-logo.gif" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Uploads\Products\11\Annotation 2019-10-17 214913.png" />
+    <Content Include="Images\Uploads\Products\11\Thumbs\Annotation 2019-10-17 214913.png" />
     <Content Include="Images\Uploads\Products\11\Thumbs\w.png" />
     <Content Include="Images\Uploads\Products\11\w.png" />
-    <Content Include="Images\Uploads\Products\12\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\12\w.png" />
-    <Content Include="Images\Uploads\Products\13\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\13\w.png" />
-    <Content Include="Images\Uploads\Products\18\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\18\w.png" />
-    <Content Include="Images\Uploads\Products\19\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\19\w.png" />
-    <Content Include="Images\Uploads\Products\20\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\20\w.png" />
-    <Content Include="Images\Uploads\Products\21\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\21\w.png" />
-    <Content Include="Images\Uploads\Products\22\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\22\w.png" />
+    <Content Include="Images\Uploads\Products\16\Thumbs\zebra-283869_960_720.jpg" />
+    <Content Include="Images\Uploads\Products\16\zebra-283869_960_720.jpg" />
+    <Content Include="Images\Uploads\Products\17\air.jpg" />
+    <Content Include="Images\Uploads\Products\17\Gallery\asia-4466113__340.jpg" />
+    <Content Include="Images\Uploads\Products\17\Thumbs\air.jpg" />
     <Content Include="Images\Uploads\Products\8\image.jpg" />
     <Content Include="Images\Uploads\Products\8\Thumbs\image.jpg" />
-    <Content Include="Images\Uploads\Products\9\Thumbs\w.png" />
-    <Content Include="Images\Uploads\Products\9\w.png" />
+    <Content Include="Images\Uploads\Products\9\location-4496459_960_720.png" />
     <Content Include="obj\Debug\my-store-project.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\my-store-project.dll" />
     <Content Include="obj\Debug\my-store-project.pdb" />
@@ -886,9 +878,7 @@
     <Content Include="Areas\Admin\Views\Shared\_ViewStart.cshtml" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\my-store-project.csproj.CopyComplete" />
-    <Content Include="obj\Debug\my-store-project.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\my-store-project.csprojAssemblyReference.cache" />
-    <Content Include="obj\Debug\Tsc.out" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Pages\Index.cshtml" />
@@ -922,6 +912,7 @@
     <Content Include="Areas\Admin\Views\Shop\Products.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\EditProduct.cshtml" />
     <Content Include="Content\ShopJS\IncrementProductScript.js" />
+    <None Include="Properties\PublishProfiles\greatstore - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -985,16 +976,13 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Images\Uploads\Products\11\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\12\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\13\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\18\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\19\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\20\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\21\Gallery\Thumbs\" />
-    <Folder Include="Images\Uploads\Products\22\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\16\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\17\Gallery\Thumbs\" />
     <Folder Include="Images\Uploads\Products\8\Gallery\Thumbs\" />
     <Folder Include="Images\Uploads\Products\9\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\9\Thumbs\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Release\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
