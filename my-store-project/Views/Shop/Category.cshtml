@@ -3,35 +3,26 @@
 @{
     ViewBag.Title = ViewBag.CategoryName;
 }
+    @foreach (var item in Model){       
+            <div class="container table">
+                <h2>@ViewBag.CategoryName</h2>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="product-top">
+                            <a href="/shop/product-details/@item.Slug">
+                                <img class="img-thumbnail" src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName"/>
+                            </a>
+                        </div>
+                        <div class="product-bottom  text-center">
+                            <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                            <h5>@Html.DisplayFor(modelItem => item.Price) €</h5>
+                            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<h2>@ViewBag.CategoryName</h2>
-
-<table class="table">
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>Image</th>
-    <th></th>
-
-    @foreach (var item in Model){
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price) €
-            </td>
-            <td>
-                <a href="/shop/product-details/@item.Slug">
-                    <img class="img-thumbnail" src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName"/>
-                </a>
-            </td>
-            <td>
+            <div>
                 <a href="/shops/product-details/@item.Slug" class="btn btn-info">Details</a>
-            </td>
-        </tr>
+            </div>          
     }
-</table>
