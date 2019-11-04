@@ -6,6 +6,7 @@ using System.IO;
 using System.Web.Mvc;
 using my_store_project.Models.Data;
 using my_store_project.Models.ViewModels.Account;
+using System.Web.Security;
 
 namespace my_store_project.Controllers
 {    
@@ -106,8 +107,35 @@ namespace my_store_project.Controllers
         public ActionResult Login(LoginUserVM model)
         {
             //проверяем модель на валидность
+            if (!ModelState.IsValid)
+                return View(model);
+
             //проверяем пользователя на валидность
-            return View();
+            bool isValid = false;
+
+            using (Db db = new Db())
+            {
+                if (db.Users.Any(x => x.Username.Equals(model.Username) && x.Password.Equals(model.Password)))
+                    isValid == true;
+
+                if (!isValid)
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                    return View(model);
+                }
+
+                else
+                {
+                    FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                    return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
+                }
+            }
+        }
+       //GET: /account/logout
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
     }
 }
