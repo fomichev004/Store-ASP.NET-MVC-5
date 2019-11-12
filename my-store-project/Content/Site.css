@@ -97,3 +97,8 @@ span.loader{
 .grandTotal{
     font-weight: bold;
 }
+
+.col-gallery
+{
+    margin: 10px;
+}
