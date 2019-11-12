@@ -137,5 +137,30 @@ namespace my_store_project.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
+    
+        public ActionResult UserNavPartial()
+        {
+            // получаем имя пользователя
+            srtring userName = User.Identity.Name();
+
+            // обьявляем модель
+            UserNavPartialVM model;
+
+            using (DB db = new DB ())
+            {
+                // получаем пользователя
+                UserDTO dto = db.Users.FirstDefault(x=> x.Username == userName);
+
+                // заполняем модель данными из контекста
+                model = new UserNavPartialVM()
+                {
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName
+                };
+            }
+            
+            // возвращаем частичтное представление с моделью
+            return PartialView(model);
+        }
     }
 }
