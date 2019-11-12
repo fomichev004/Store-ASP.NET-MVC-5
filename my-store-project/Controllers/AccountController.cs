@@ -141,15 +141,15 @@ namespace my_store_project.Controllers
         public ActionResult UserNavPartial()
         {
             // получаем имя пользователя
-            srtring userName = User.Identity.Name();
+            string userName = User.Identity.Name();
 
             // обьявляем модель
             UserNavPartialVM model;
 
-            using (DB db = new DB ())
+            using (Db db = new Db())
             {
                 // получаем пользователя
-                UserDTO dto = db.Users.FirstDefault(x=> x.Username == userName);
+                UserDTO dto = db.Users.FirstOrDefault(x=> x.Username == userName);
 
                 // заполняем модель данными из контекста
                 model = new UserNavPartialVM()
