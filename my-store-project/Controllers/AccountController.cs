@@ -141,7 +141,7 @@ namespace my_store_project.Controllers
         public ActionResult UserNavPartial()
         {
             // получаем имя пользователя
-            string userName = User.Identity.Name();
+            string userName = User.Identity.Name;
 
             // обьявляем модель
             UserNavPartialVM model;
@@ -161,6 +161,32 @@ namespace my_store_project.Controllers
             
             // возвращаем частичтное представление с моделью
             return PartialView(model);
+        }
+
+        //GET: /account/user-profile
+        [HttpGet]
+        [ActionName("user-profile")]
+        public ActionResult UserProfile()
+        {
+            // получаем имя пользователя
+            string userName = User.Identity.Name;
+
+            // обьявляем модель
+            UserProfile model;
+
+             using (DBNull db = new Db())
+             {            
+               // получаем пользователя
+                UserDTO dto = db.Users.FirstOrDefault(x=> x.Username == userName);
+
+                // инициализируем модель данными
+                model = new UserProfileVM(dto);
+            }
+
+            // возвращаем модель в представление
+            return View("UserProfile", model);
+
+
         }
     }
 }
