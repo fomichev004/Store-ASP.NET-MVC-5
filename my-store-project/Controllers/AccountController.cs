@@ -116,7 +116,7 @@ namespace my_store_project.Controllers
             using (Db db = new Db())
             {
                 if (db.Users.Any(x => x.Username.Equals(model.Username) && x.Password.Equals(model.Password)))
-                    isValid == true;
+                    isValid = true;
 
                 if (!isValid)
                 {
